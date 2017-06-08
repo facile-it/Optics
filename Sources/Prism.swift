@@ -30,10 +30,6 @@ extension PrismType {
 			tryGet: { self.tryGet($0).flatMap(other.tryGet) },
 			inject: { self.inject(other.inject($0)) })
 	}
-
-	public static func >>> <OtherPrism> (left: Self, right: OtherPrism) -> Prism<WholeType,OtherPrism.PartType> where OtherPrism: PrismType, OtherPrism.WholeType == PartType {
-		return left.compose(right)
-	}
 }
 
 /// A BoundPrism is a reference to a component of a specific sum type, to which it's "bound"
