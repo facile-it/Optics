@@ -59,6 +59,8 @@
 		38D737A51EE97A33000BAF0C /* PrismTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrismTests.swift; sourceTree = "<group>"; };
 		38D737A71EE97E60000BAF0C /* Optics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optics.swift; sourceTree = "<group>"; };
 		38D737AA1EE981AE000BAF0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		38D737AC1EE982BB000BAF0C /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
+		38D737AD1EE9830B000BAF0C /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,10 +87,12 @@
 			isa = PBXGroup;
 			children = (
 				38D737911EE95D54000BAF0C /* Optics.h */,
+				38D737AA1EE981AE000BAF0C /* README.md */,
 				38D7378F1EE95D54000BAF0C /* Info.plist */,
 				38D737901EE95D54000BAF0C /* InfoTests.plist */,
 				38D737A21EE960F4000BAF0C /* Package.swift */,
-				38D737AA1EE981AE000BAF0C /* README.md */,
+				38D737AC1EE982BB000BAF0C /* .travis.yml */,
+				38D737AD1EE9830B000BAF0C /* codecov.yml */,
 				38D737971EE95E2C000BAF0C /* Dependencies */,
 				38D737781EE95C7D000BAF0C /* Products */,
 				38D7376B1EE95BBB000BAF0C /* Sources */,
