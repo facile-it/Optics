@@ -10,7 +10,6 @@
 		38D737811EE95C7D000BAF0C /* Optics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737771EE95C7D000BAF0C /* Optics.framework */; };
 		38D737941EE95DB1000BAF0C /* LensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737711EE95BC5000BAF0C /* LensTests.swift */; };
 		38D737951EE95DB5000BAF0C /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
-		38D737961EE95DB5000BAF0C /* Operators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376D1EE95BBB000BAF0C /* Operators.swift */; };
 		38D7379C1EE95F45000BAF0C /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737981EE95ECD000BAF0C /* SwiftCheck.framework */; };
 		38D7379E1EE95F5A000BAF0C /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38D737981EE95ECD000BAF0C /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38D737A11EE9600C000BAF0C /* TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A01EE9600C000BAF0C /* TestUtilities.swift */; };
@@ -44,7 +43,6 @@
 
 /* Begin PBXFileReference section */
 		38D7376C1EE95BBB000BAF0C /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
-		38D7376D1EE95BBB000BAF0C /* Operators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Operators.swift; sourceTree = "<group>"; };
 		38D7376F1EE95BC5000BAF0C /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		38D737711EE95BC5000BAF0C /* LensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensTests.swift; sourceTree = "<group>"; };
 		38D737771EE95C7D000BAF0C /* Optics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Optics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,7 +104,6 @@
 			isa = PBXGroup;
 			children = (
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
-				38D7376D1EE95BBB000BAF0C /* Operators.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
 				38D737A31EE9782E000BAF0C /* Prism.swift */,
 			);
@@ -262,7 +259,6 @@
 				38D737A41EE9782E000BAF0C /* Prism.swift in Sources */,
 				38D737A91EE97EBA000BAF0C /* Optics.swift in Sources */,
 				38D737951EE95DB5000BAF0C /* Lens.swift in Sources */,
-				38D737961EE95DB5000BAF0C /* Operators.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -572,6 +568,7 @@
 				38D7378B1EE95C7D000BAF0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38D7378C1EE95C7D000BAF0C /* Build configuration list for PBXNativeTarget "OpticsTests" */ = {
 			isa = XCConfigurationList;
@@ -580,6 +577,7 @@
 				38D7378E1EE95C7D000BAF0C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
