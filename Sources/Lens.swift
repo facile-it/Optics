@@ -34,6 +34,10 @@ extension LensType {
 				}
 		})
 	}
+
+	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType {
+		return left.compose(right)
+	}
 }
 
 /// LensZip will hold the laws only if the involved lenses are focusing on different parts
