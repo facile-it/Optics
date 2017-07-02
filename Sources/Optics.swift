@@ -4,3 +4,10 @@ public protocol OpticsType {
 	associatedtype WholeType
 	associatedtype PartType
 }
+
+precedencegroup OpticsCompositionPrecedence {
+	associativity: left
+	higherThan: BitwiseShiftPrecedence
+}
+
+infix operator .. : OpticsCompositionPrecedence
