@@ -3,6 +3,13 @@ import XCTest
 import SwiftCheck
 
 class LensTests: XCTestCase {
+	static var allTests = [
+		("testOver", testOver),
+		("testComposedLensWellBehaved", testComposedLensWellBehaved),
+		("testZipLensWellBehaved", testZipLensWellBehaved),
+		("testDictLensWellBehaved", testDictLensWellBehaved)
+	]
+
 	func testOver() {
 		property("'over' works like injecting a value dependent on the previous tryGet") <- forAll { (ap: ArbitraryProduct<Int,Int>, ar: ArrowOf<Int,Int>) in
 			let p = ap.get
@@ -104,11 +111,4 @@ class LensTests: XCTestCase {
 			return LensLaw.setSet(lens: lens, whole: dict, part: value)
 		}
 	}
-
-    static var allTests = [
-        ("testOver", testOver),
-        ("testComposedLensWellBehaved", testComposedLensWellBehaved),
-        ("testZipLensWellBehaved", testZipLensWellBehaved),
-        ("testDictLensWellBehaved", testDictLensWellBehaved)
-    ]
 }

@@ -3,6 +3,11 @@ import XCTest
 import SwiftCheck
 
 class PrismTests: XCTestCase {
+	static var allTests = [
+		("testOver", testOver),
+		("testComposedPrismWellBehaved", testComposedPrismWellBehaved)
+	]
+
 	func testOver() {
 		property("'tryOver' works like injecting a value dependent on the previous tryGet") <- forAll { (as_: ArbitrarySum<Int,Int>, ar: ArrowOf<Int,Int>) in
 			let s = as_.get
@@ -41,9 +46,4 @@ class PrismTests: XCTestCase {
 			return PrismLaw.tryGetInject(prism: joined, whole: s1, part: r3)
 		}
 	}
-
-	static var allTests = [
-		("testOver", testOver),
-		("testComposedPrismWellBehaved", testComposedPrismWellBehaved)
-	]
 }

@@ -5,7 +5,7 @@ import PackageDescription
 let package = Package(
     name: "Optics",
     targets: [
-		Target(name: "Optics"),
+		Target(name: "Optics")
 	],
     exclude: [
 		"Tests"
