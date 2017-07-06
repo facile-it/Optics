@@ -2,10 +2,10 @@ language: objective-c
 osx_image: xcode8.3
 xcode_project: Optics.xcodeproj
 xcode_scheme: Optics
-xcode_sdk: iphonesimulator10.3
+xcode_sdk: macosx10.12
 
 script:
-  - xcodebuild clean build test -project "Optics.xcodeproj" -scheme "Optics" -destination 'platform=iOS Simulator,name=iPhone 7,OS=10.3.1'
+- xcodebuild clean build test -project "Optics.xcodeproj" -scheme "Optics" -destination 'generic/platform=macOS'
 
 after_success:
   - bash <(curl -s https://codecov.io/bash)
