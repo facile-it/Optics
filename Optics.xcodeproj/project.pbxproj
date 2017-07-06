@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3814D6971F0E6FF00089D260 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
+		3814D6981F0E6FF20089D260 /* Optics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A71EE97E60000BAF0C /* Optics.swift */; };
+		3814D6991F0E6FF40089D260 /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A31EE9782E000BAF0C /* Prism.swift */; };
 		38A8245E1F0E622A00C941A9 /* Optics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737771EE95C7D000BAF0C /* Optics.framework */; };
 		38A824641F0E624B00C941A9 /* TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A01EE9600C000BAF0C /* TestUtilities.swift */; };
 		38A824651F0E624B00C941A9 /* LensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737711EE95BC5000BAF0C /* LensTests.swift */; };
@@ -325,6 +328,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3814D6991F0E6FF40089D260 /* Prism.swift in Sources */,
+				3814D6971F0E6FF00089D260 /* Lens.swift in Sources */,
+				3814D6981F0E6FF20089D260 /* Optics.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -741,6 +747,7 @@
 				38A824631F0E622A00C941A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38A824741F0E62DB00C941A9 /* Build configuration list for PBXNativeTarget "Optics-ios" */ = {
 			isa = XCConfigurationList;
@@ -749,6 +756,7 @@
 				38A824761F0E62DB00C941A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		38D737681EE95B62000BAF0C /* Build configuration list for PBXProject "Optics" */ = {
 			isa = XCConfigurationList;
