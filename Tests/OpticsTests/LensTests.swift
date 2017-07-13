@@ -66,21 +66,21 @@ class LensTests: XCTestCase {
 	func testZipLensWellBehaved() {
 		property("SetGet") <- forAll { (l1: Int, r1: Int, l2: Int, r2: Int) in
 
-			let lens = LensZip.with(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
+			let lens = zip(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
 
 			return LensLaw.setGet(lens: lens, whole: Product(left: l1, right: r1), part: (l2,r2))
 		}
 
 		property("GetSet") <- forAll { (l1: Int, r1: Int, l2: Int, r2: Int) in
 
-			let lens = LensZip.with(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
+			let lens = zip(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
 
 			return LensLaw.getSet(lens: lens, whole: Product(left: l1, right: r1), part: (l2,r2))
 		}
 
 		property("SetSet") <- forAll { (l1: Int, r1: Int, l2: Int, r2: Int) in
 
-			let lens = LensZip.with(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
+			let lens = zip(Product<Int,Int>.leftLens, Product<Int,Int>.rightLens)
 
 			return LensLaw.setSet(lens: lens, whole: Product(left: l1, right: r1), part: (l2,r2))
 		}
