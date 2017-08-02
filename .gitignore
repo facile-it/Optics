@@ -6,3 +6,4 @@ Optics.xcodeproj/project.xcworkspace/xcuserdata
 Carthage/Checkouts
 Play.playground
 Play.xcworkspace
+*.bcsymbolmap
