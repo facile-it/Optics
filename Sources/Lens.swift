@@ -40,16 +40,16 @@ extension LensType {
 	}
 }
 
-/// LensZip will hold the laws only if the involved lenses are focusing on different parts
-public struct LensZip {
-	public static func with<A, B>(_ a: A, _ b: B) -> Lens<A.WholeType,(A.PartType,B.PartType)> where A: LensType, B: LensType, A.WholeType == B.WholeType {
-		return Lens<A.WholeType,(A.PartType,B.PartType)>(
+/// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
+extension Lens {
+	public static func zip<A,B>(_ a: A, _ b: B) -> Lens<WholeType,(A.PartType,B.PartType)> where A: LensType, B: LensType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == (A.PartType,B.PartType) {
+		return Lens<WholeType,(A.PartType,B.PartType)>(
 			get: { (a.get($0),b.get($0)) },
 			set: { parts in { whole in b.set(parts.1)(a.set(parts.0)(whole)) } })
 	}
 
-	public static func with<A, B, C>(_ a: A, _ b: B, _ c: C) -> Lens<A.WholeType,(A.PartType,B.PartType,C.PartType)> where A: LensType, B: LensType, C: LensType, A.WholeType == B.WholeType, B.WholeType == C.WholeType {
-		return Lens<A.WholeType,(A.PartType,B.PartType,C.PartType)>(
+	public static func zip<A, B, C>(_ a: A, _ b: B, _ c: C) -> Lens<WholeType,(A.PartType,B.PartType,C.PartType)> where A: LensType, B: LensType, C: LensType, WholeType == A.WholeType, WholeType == B.WholeType, WholeType == C.WholeType, PartType == (A.PartType,B.PartType,C.PartType) {
+		return Lens<WholeType,(A.PartType,B.PartType,C.PartType)>(
 			get: { (a.get($0),b.get($0),c.get($0)) },
 			set: { parts in { whole in c.set(parts.2)(b.set(parts.1)(a.set(parts.0)(whole))) } })
 	}
