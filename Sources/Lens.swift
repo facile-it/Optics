@@ -1,3 +1,6 @@
+import Monads
+import Abstract
+
 /// A Lens is a reference to a subpart of some data structure
 
 public protocol LensType: OpticsType {
@@ -91,7 +94,7 @@ extension LensType {
 	}
 }
 
-//MARK: - Utilities
+// MARK: - Utilities
 
 extension BoundLens where Part: Equatable {
 	@discardableResult
@@ -112,7 +115,64 @@ extension Dictionary {
 	}
 }
 
-//MARK: - Lens Laws
+// MARK: Lenses on Optionals
+
+extension LensType where PartType: OptionalType {
+	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
+		return Lens<WholeType,Optional<OtherLens.PartType>>.init(
+			get: { whole in self.get(whole).run(ifSome: { other.get($0) }, ifNone: { nil }) },
+			set: { optionalPart in { whole in
+				optionalPart.run(
+					ifSome: { self.set(PartType.init(other.set($0)(self.get(whole).get(or: defaultPart()))))(whole) },
+					ifNone: { self.set(PartType.init())(whole) }) } })
+	}
+
+	public static func .. <OtherLens>(left: Self, right: (OtherLens, injecting: () -> PartType.ElementType))
+		-> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
+			return left.compose(right.0, injecting: right.injecting())
+	}
+
+	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
+		return Lens<WholeType,OtherLens.PartType>.init(
+			get: { whole in
+				self.get(whole).run(
+					ifSome: { other.get($0) },
+					ifNone: { OtherLens.PartType.init() })
+		},
+			set: { optionalPart in { whole in
+				optionalPart.run(
+					ifSome: { _ in self.set(PartType.init(other.set(optionalPart)(self.get(whole).get(or: defaultPart()))))(whole) },
+					ifNone: {
+						self.get(whole).run(
+							ifSome: { self.set(PartType.init(other.set(OtherLens.PartType.init())($0)))(whole) },
+							ifNone: { whole }) }) } })
+	}
+
+	public static func .. <OtherLens>(left: Self, right: (OtherLens, injecting: () -> PartType.ElementType))
+		-> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
+			return left.compose(right.0, injecting: right.injecting())
+	}
+}
+
+extension LensType where PartType: OptionalType, PartType.ElementType: Monoid {
+	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
+		return self.compose(other, injecting: .empty)
+	}
+
+	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
+		return self.compose(other, injecting: .empty)
+	}
+
+	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
+		return left.compose(right)
+	}
+
+	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
+		return left.compose(right)
+	}
+}
+
+// MARK: - Lens Laws
 
 /*:
 ## Enforcing lens laws

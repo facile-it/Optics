@@ -1,49 +1,59 @@
 @testable import Optics
 import SwiftCheck
 
-struct Product<A: Equatable,B: Equatable>: Equatable {
-	let left: A
-	let right: B
-	init(left: A, right: B) {
-		self.left = left
-		self.right = right
+struct Pair<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equatable {
+	var a: A
+	var b: B
+
+	public static var arbitrary: Gen<Pair<A, B>> {
+		return Gen.compose { Pair.init(a: $0.generate(), b: $0.generate()) }
 	}
 
-	var decompose: (A,B) {
-		return (left,right)
+	static func == (left: Pair, right: Pair) -> Bool {
+		return left.a == right.a
+			&& left.b == right.b
 	}
 
-	static func == (left: Product<A,B>, right: Product<A,B>) -> Bool {
-		return left.left == right.left
-			&& left.right == right.right
-	}
+	enum lens {
+		static var a: Lens<Pair<A,B>,A> {
+			return Lens<Pair<A,B>,A>.init(
+				get: { whole in whole.a },
+				set: { part in { whole in var m = whole; m.a = part; return m }})
+		}
 
-	static var leftLens: Lens<Product,A> {
-		return Lens(
-			get: { $0.left },
-			set: { part in { whole in Product(left: part, right: whole.right) } })
-	}
-
-	static var rightLens: Lens<Product,B> {
-		return Lens(
-			get: { $0.right },
-			set: { part in { whole in Product(left: whole.left, right: part) } })
+		static var b: Lens<Pair<A,B>,B> {
+			return Lens<Pair<A,B>,B>.init(
+				get: { whole in whole.b },
+				set: { part in { whole in var m = whole; m.b = part; return m }})
+		}
 	}
 }
 
-struct ArbitraryProduct<A: Equatable & Arbitrary, B: Equatable & Arbitrary>: Arbitrary {
+struct OptionalPair<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equatable {
+	var a: A?
+	var b: B?
 
-	let get: Product<A,B>
-
-	init(_ get: Product<A,B>) {
-		self.get = get
+	public static var arbitrary: Gen<OptionalPair<A, B>> {
+		return Gen.compose { OptionalPair.init(a: $0.generate(using: OptionalOf<A>.arbitrary.map { $0.getOptional }), b: $0.generate(using: OptionalOf<B>.arbitrary.map { $0.getOptional })) }
 	}
 
-	static var arbitrary: Gen<ArbitraryProduct<A,B>> {
-		return Gen<(A,B)>
-			.zip(A.arbitrary, B.arbitrary)
-			.map(Product.init)
-			.map(ArbitraryProduct.init)
+	static func == (left: OptionalPair, right: OptionalPair) -> Bool {
+		return left.a == right.a
+			&& left.b == right.b
+	}
+
+	enum lens {
+		static var a: Lens<OptionalPair<A,B>,A?> {
+			return Lens<OptionalPair<A,B>,A?>.init(
+				get: { whole in whole.a },
+				set: { part in { whole in var m = whole; m.a = part; return m }})
+		}
+
+		static var b: Lens<OptionalPair<A,B>,B?> {
+			return Lens<OptionalPair<A,B>,B?>.init(
+				get: { whole in whole.b },
+				set: { part in { whole in var m = whole; m.b = part; return m }})
+		}
 	}
 }
 

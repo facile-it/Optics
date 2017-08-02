@@ -1,0 +1,10 @@
+framework module Monads {
+  umbrella header "Monads.h"
+
+  export *
+  module * { export * }
+}
+
+module Monads.Swift {
+    header "Monads-Swift.h"
+}
