@@ -24,6 +24,10 @@ extension PrismType {
 	public func tryOver(_ transform: @escaping (PartType) -> PartType) -> (WholeType) -> WholeType {
 		return { whole in self.tryGet(whole).map { self.inject(transform($0)) } ?? whole }
 	}
+    
+    public func isCase(_ whole: WholeType) -> Bool {
+        return tryGet(whole).isNotNil
+    }
 
 	public func compose<OtherPrism>(_ other: OtherPrism) -> Prism<WholeType,OtherPrism.PartType> where OtherPrism: PrismType, OtherPrism.WholeType == PartType {
 		return Prism<WholeType,OtherPrism.PartType>(
