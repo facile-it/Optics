@@ -7,4 +7,5 @@ framework module Monads {
 
 module Monads.Swift {
     header "Monads-Swift.h"
+    requires objc
 }
