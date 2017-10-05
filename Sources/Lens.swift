@@ -1,5 +1,6 @@
 import Monads
 import Abstract
+import Functional
 
 /// A Lens is a reference to a subpart of some data structure
 
@@ -45,10 +46,10 @@ extension LensType {
 
 /// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
 extension Lens {
-	public static func zip<A,B>(_ a: A, _ b: B) -> Lens<WholeType,(A.PartType,B.PartType)> where A: LensType, B: LensType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == (A.PartType,B.PartType) {
-		return Lens<WholeType,(A.PartType,B.PartType)>(
-			get: { (a.get($0),b.get($0)) },
-			set: { parts in { whole in b.set(parts.1)(a.set(parts.0)(whole)) } })
+	public static func zip<A,B>(_ a: A, _ b: B) -> Lens<WholeType,Both<A.PartType,B.PartType>> where A: LensType, B: LensType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == Both<A.PartType,B.PartType> {
+		return Lens<WholeType,Both<A.PartType,B.PartType>>(
+			get: { Both(a.get($0),b.get($0)) },
+			set: { parts in { whole in b.set(parts.right)(a.set(parts.left)(whole)) } })
 	}
 
 	public static func zip<A, B, C>(_ a: A, _ b: B, _ c: C) -> Lens<WholeType,(A.PartType,B.PartType,C.PartType)> where A: LensType, B: LensType, C: LensType, WholeType == A.WholeType, WholeType == B.WholeType, WholeType == C.WholeType, PartType == (A.PartType,B.PartType,C.PartType) {
@@ -211,6 +212,10 @@ public struct LensLaw {
 	}
 
 	public static func setGet<Whole, Part1, Part2, SomeLens>(lens: SomeLens, whole: Whole, part: (Part1,Part2)) -> Bool where Part1: Equatable, Part2: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == (Part1,Part2) {
+		return lens.get(lens.set(part)(whole)) == part
+	}
+
+	public static func setGet<Whole, Part1, Part2, SomeLens>(lens: SomeLens, whole: Whole, part: Both<Part1,Part2>) -> Bool where Part1: Equatable, Part2: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Both<Part1,Part2> {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 

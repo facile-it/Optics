@@ -32,6 +32,8 @@
 		38D737951EE95DB5000BAF0C /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
 		38D737A41EE9782E000BAF0C /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A31EE9782E000BAF0C /* Prism.swift */; };
 		38D737A91EE97EBA000BAF0C /* Optics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A71EE97E60000BAF0C /* Optics.swift */; };
+		38FF309C1F86190F00977CA7 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C349771F72AE2500811F72 /* Functional.framework */; };
+		38FF309D1F86191400977CA7 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38FF309B1F86190000977CA7 /* Functional.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +90,7 @@
 		38D737AC1EE982BB000BAF0C /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		38D737AD1EE9830B000BAF0C /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 		38D737AE1EE9844A000BAF0C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
+		38FF309B1F86190000977CA7 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = Carthage/Build/iOS/Functional.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +100,7 @@
 			files = (
 				38C349571F72ABA900811F72 /* Abstract.framework in Frameworks */,
 				38C349581F72ABA900811F72 /* Monads.framework in Frameworks */,
+				38FF309D1F86191400977CA7 /* Functional.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -119,6 +123,7 @@
 			files = (
 				38C349551F72ABA000811F72 /* Abstract.framework in Frameworks */,
 				38C349561F72ABA000811F72 /* Monads.framework in Frameworks */,
+				38FF309C1F86190F00977CA7 /* Functional.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -144,6 +149,7 @@
 		38C3497D1F72AE7C00811F72 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
+				38C349771F72AE2500811F72 /* Functional.framework */,
 				389D15851F32019E003D4CCA /* Abstract.framework */,
 				389D15861F32019E003D4CCA /* Monads.framework */,
 			);
@@ -153,6 +159,7 @@
 		38C3497E1F72AE8600811F72 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
+				38FF309B1F86190000977CA7 /* Functional.framework */,
 				389D15891F3201AA003D4CCA /* Abstract.framework */,
 				389D158A1F3201AA003D4CCA /* Monads.framework */,
 			);
@@ -162,7 +169,6 @@
 		38C3497F1F72AE9100811F72 /* test only */ = {
 			isa = PBXGroup;
 			children = (
-				38C349771F72AE2500811F72 /* Functional.framework */,
 				38C3497A1F72AE5900811F72 /* Operadics.framework */,
 				38A8243D1F0E528C00C941A9 /* SwiftCheck.framework */,
 			);

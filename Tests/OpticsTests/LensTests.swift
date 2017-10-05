@@ -1,6 +1,7 @@
 import XCTest
 @testable import Optics
 import SwiftCheck
+import Functional
 
 class LensTests: XCTestCase {
 	static var allTests = [
@@ -67,21 +68,21 @@ class LensTests: XCTestCase {
 
 			let lens = Lens.zip(Pair<Int,Int>.lens.a, Pair<Int,Int>.lens.b)
 
-			return LensLaw.setGet(lens: lens, whole: Pair(a: l1, b: r1), part: (l2,r2))
+			return LensLaw.setGet(lens: lens, whole: Pair(a: l1, b: r1), part: Both(l2,r2))
 		}
 
 		property("GetSet") <- forAll { (l1: Int, r1: Int, l2: Int, r2: Int) in
 
 			let lens = Lens.zip(Pair<Int,Int>.lens.a, Pair<Int,Int>.lens.b)
 
-			return LensLaw.getSet(lens: lens, whole: Pair(a: l1, b: r1), part: (l2,r2))
+			return LensLaw.getSet(lens: lens, whole: Pair(a: l1, b: r1), part: Both(l2,r2))
 		}
 
 		property("SetSet") <- forAll { (l1: Int, r1: Int, l2: Int, r2: Int) in
 
 			let lens = Lens.zip(Pair<Int,Int>.lens.a, Pair<Int,Int>.lens.b)
 
-			return LensLaw.setSet(lens: lens, whole: Pair(a: l1, b: r1), part: (l2,r2))
+			return LensLaw.setSet(lens: lens, whole: Pair(a: l1, b: r1), part: Both(l2,r2))
 		}
 	}
 

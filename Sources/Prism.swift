@@ -1,3 +1,5 @@
+import Functional
+
 /// A Prism is a reference to a component of a sum type
 
 public protocol PrismType: OpticsType {
@@ -37,6 +39,15 @@ extension PrismType {
 
 	public static func .. <OtherPrism>(left: Self, right: OtherPrism) -> Prism<WholeType,OtherPrism.PartType> where OtherPrism: PrismType, OtherPrism.WholeType == PartType {
 		return left.compose(right)
+	}
+}
+
+/// zipped prisms will hold the laws only if the involved prisms are focusing on different parts
+extension Prism {
+	public static func zip<A,B>(_ a: A, _ b: B) -> Prism<WholeType,Either<A.PartType,B.PartType>> where A: PrismType, B: PrismType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == Either<A.PartType,B.PartType> {
+		return Prism<WholeType,Either<A.PartType,B.PartType>>(
+			tryGet: { a.tryGet($0).map(Either.left) ?? b.tryGet($0).map(Either.right) },
+			inject: { $0.fold(onLeft: a.inject, onRight: b.inject) })
 	}
 }
 
