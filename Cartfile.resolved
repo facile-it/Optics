@@ -1,5 +1,5 @@
-github "broomburgo/Abstract" "f8cc71e7c04572a3afe76e737ec4c80f913f5770"
-github "broomburgo/Functional" "0.0.8"
-github "broomburgo/Monads" "0.5.0"
+github "broomburgo/Abstract" "a6bf1ba0483e2b7fbd222d332b3a8861753f87ae"
+github "broomburgo/Functional" "0.1.1"
+github "broomburgo/Monads" "0.6.1"
 github "broomburgo/Operadics" "f6aa739369baded0b509157cc8c9beaf16bfe636"
 github "typelift/SwiftCheck" "c71e609d17144132db225bfa39cb2a89bd4f2548"

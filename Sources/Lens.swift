@@ -124,7 +124,7 @@ extension LensType where PartType: OptionalType {
 			get: { whole in self.get(whole).run(ifSome: { other.get($0) }, ifNone: { nil }) },
 			set: { optionalPart in { whole in
 				optionalPart.run(
-					ifSome: { self.set(PartType.init(other.set($0)(self.get(whole).get(or: defaultPart()))))(whole) },
+					ifSome: { self.set(PartType.pure(other.set($0)(self.get(whole).get(or: defaultPart()))))(whole) },
 					ifNone: { self.set(PartType.init())(whole) }) } })
 	}
 
@@ -142,10 +142,10 @@ extension LensType where PartType: OptionalType {
 		},
 			set: { optionalPart in { whole in
 				optionalPart.run(
-					ifSome: { _ in self.set(PartType.init(other.set(optionalPart)(self.get(whole).get(or: defaultPart()))))(whole) },
+					ifSome: { _ in self.set(PartType.pure(other.set(optionalPart)(self.get(whole).get(or: defaultPart()))))(whole) },
 					ifNone: {
 						self.get(whole).run(
-							ifSome: { self.set(PartType.init(other.set(OtherLens.PartType.init())($0)))(whole) },
+							ifSome: { self.set(PartType.pure(other.set(OtherLens.PartType.init())($0)))(whole) },
 							ifNone: { whole }) }) } })
 	}
 
