@@ -116,6 +116,20 @@ extension Dictionary {
 	}
 }
 
+extension WritableKeyPath {
+	public var lens: Lens<Root,Value> {
+		return Lens<Root,Value>.init(
+			get: { whole in whole[keyPath: self] },
+			set: { part in
+				{ whole in
+					var m = whole
+					m[keyPath: self] = part
+					return m
+				}
+		})
+	}
+}
+
 // MARK: Lenses on Optionals
 
 extension LensType where PartType: OptionalType {
