@@ -229,19 +229,19 @@ public struct LensLaw {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Optional<Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Optional<Whole>, SomeLens.PartType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Array<Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Array<Whole>, SomeLens.PartType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Dictionary<String,Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Dictionary<String,Whole>, SomeLens.PartType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
