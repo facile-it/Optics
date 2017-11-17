@@ -4,24 +4,42 @@ import Functional
 
 /// A Lens is a reference to a subpart of some data structure
 
-public protocol LensType: OpticsType {
-	var get: (WholeType) -> PartType { get } /// get the "focused" part
-	var set: (PartType) -> (WholeType) -> WholeType { get } /// set a new value for the "focused" part
-
-	init(get: @escaping (WholeType) -> PartType, set: @escaping (PartType) -> (WholeType) -> WholeType)
+protocol LensType: OpticsType {
+    var get: (SType) -> AType { get }
+    var set: (BType) -> (SType) -> TType { get }
 }
 
-public struct Lens<Whole,Part>: LensType {
-	public typealias WholeType = Whole
-	public typealias PartType = Part
+struct LensP<S,T,A,B>: LensType {
+    public typealias SType = S
+    public typealias TType = T
+    public typealias AType = A
+    public typealias BType = B
+    
+    public let get: (S) -> A
+    public let set: (B) -> (S) -> T
+    
+    public init(get: @escaping (S) -> A, set: @escaping (B) -> (S) -> T) {
+        self.get = get
+        self.set = set
+    }
+}
 
-	public let get: (Whole) -> Part
-	public let set: (Part) -> (Whole) -> Whole
+typealias Lens<Whole,Part> = LensP<Whole,Whole,Part,Part>
 
-	public init(get: @escaping (Whole) -> Part, set: @escaping (Part) -> (Whole) -> Whole) {
-		self.get = get
-		self.set = set
-	}
+extension LensType {
+    func modify(_ transform: @escaping (AType) -> (BType)) -> (SType) -> TType {
+        return { s in self.set(transform(self.get(s)))(s) }
+    }
+    
+    func compose<OtherLens>(_ other: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
+        return LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType>.init(
+            get: { other.get(self.get($0)) },
+            set: { bp in
+                return { s in
+                    return self.set(other.set(bp)(self.get(s)))(s)
+                }
+        })
+    }
 }
 
 extension LensType {
