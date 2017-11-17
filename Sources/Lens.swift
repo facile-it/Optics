@@ -4,12 +4,12 @@ import Functional
 
 /// A Lens is a reference to a subpart of some data structure
 
-protocol LensType: OpticsType {
+public protocol LensType: OpticsType {
     var get: (SType) -> AType { get }
     var set: (BType) -> (SType) -> TType { get }
 }
 
-struct LensP<S,T,A,B>: LensType {
+public struct LensP<S,T,A,B>: LensType {
     public typealias SType = S
     public typealias TType = T
     public typealias AType = A
@@ -24,14 +24,14 @@ struct LensP<S,T,A,B>: LensType {
     }
 }
 
-typealias Lens<Whole,Part> = LensP<Whole,Whole,Part,Part>
+public typealias Lens<Whole,Part> = LensP<Whole,Whole,Part,Part>
 
 extension LensType {
-    func modify(_ transform: @escaping (AType) -> (BType)) -> (SType) -> TType {
+    public func modify(_ transform: @escaping (AType) -> (BType)) -> (SType) -> TType {
         return { s in self.set(transform(self.get(s)))(s) }
     }
     
-    func compose<OtherLens>(_ other: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
+    public func compose<OtherLens>(_ other: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
         return LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType>.init(
             get: { other.get(self.get($0)) },
             set: { bp in
@@ -40,26 +40,10 @@ extension LensType {
                 }
         })
     }
-}
-
-extension LensType {
-	public func over(_ transform: @escaping (PartType) -> PartType) -> (WholeType) -> WholeType {
-		return { whole in self.set(transform(self.get(whole)))(whole) }
-	}
-
-	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType {
-		return Lens<WholeType,OtherLens.PartType>(
-			get: { other.get(self.get($0)) },
-			set: { (subpart: OtherLens.PartType) in
-				{ (whole: WholeType) -> WholeType in
-					self.set(other.set(subpart)(self.get(whole)))(whole)
-				}
-		})
-	}
-
-	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType {
-		return left.compose(right)
-	}
+    
+    public static func .. <OtherLens>(left: Self, right: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
+        return left.compose(right)
+    }
 }
 
 /// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
