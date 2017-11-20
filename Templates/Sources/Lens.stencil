@@ -1,5 +1,18 @@
 {% for type in types.all|annotated:"zipCount" %}
+//MARK: -{{ type.name }}: zip
+extension {{ type.name }} {
+
 {% for count in type.annotations.zipCount %}
-{{ count }}
+{% if count != 1 %}
+// ** {{ count }} **
+
+{% for innerCount in type.annotations.zipCount %}
+{% if innerCount <= count %}
+// {{ innerCount }}
+{% endif %}
 {% endfor %}
+
+{% endif %}
+{% endfor %}
+}
 {% endfor %}
