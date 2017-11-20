@@ -61,54 +61,7 @@ extension Lens {
 	}
 }
 
-/// A BoundLens is a reference to a subpart of a specific data structure, to which it's "bound"
-
-public struct BoundLens<Whole,Part> {
-	fileprivate let value: Whole
-	fileprivate let lens: Lens<Whole,Part>
-
-	public init<AssociatedLens>(value: Whole, lens: AssociatedLens) where AssociatedLens: LensType, AssociatedLens.WholeType == Whole, AssociatedLens.PartType == Part {
-		self.value = value
-		self.lens = Lens(get: lens.get, set: lens.set)
-	}
-}
-
-extension BoundLens {
-	public var unmodified: Whole {
-		return value
-	}
-
-	public var get: Part {
-		return lens.get(value)
-	}
-
-	public var set: (Part) -> Whole {
-		return { self.lens.set($0)(self.value) }
-	}
-
-	public func over(_ transform: @escaping (Part) -> Part) -> Whole {
-		return lens.over(transform)(value)
-	}
-}
-
-extension LensType {
-	public func bind(to value: WholeType) -> BoundLens<WholeType,PartType> {
-		return BoundLens(value: value, lens: self)
-	}
-}
-
 // MARK: - Utilities
-
-extension BoundLens where Part: Equatable {
-	@discardableResult
-	public func should(be requiredPart: Part) -> Whole {
-		if get != requiredPart {
-			return set(requiredPart)
-		} else {
-			return unmodified
-		}
-	}
-}
 
 extension Dictionary {
 	public static func lens(at key: Key) -> Lens<Dictionary,Value?> {
