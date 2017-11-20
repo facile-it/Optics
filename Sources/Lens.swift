@@ -9,6 +9,7 @@ public protocol LensType: OpticsType {
     var set: (BType) -> (SType) -> TType { get }
 }
 
+// sourcery: zipCount = 1, zipCount = 2
 public struct LensP<S,T,A,B>: LensType {
     public typealias SType = S
     public typealias TType = T

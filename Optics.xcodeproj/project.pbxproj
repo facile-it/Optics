@@ -95,6 +95,7 @@
 		38FF309B1F86190000977CA7 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = Carthage/Build/iOS/Functional.framework; sourceTree = "<group>"; };
 		AAA8010A1FC30FC300F08653 /* Lens.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lens.stencil; sourceTree = "<group>"; };
 		AAA8010B1FC3108E00F08653 /* Lens.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lens.generated.swift; sourceTree = "<group>"; };
+		AAA8010F1FC3166300F08653 /* SourceryUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceryUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -202,6 +203,7 @@
 		38D7376B1EE95BBB000BAF0C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				AAA8010E1FC3164B00F08653 /* Utilities */,
 				AAA8010B1FC3108E00F08653 /* Lens.generated.swift */,
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
@@ -263,6 +265,14 @@
 				AAA8010A1FC30FC300F08653 /* Lens.stencil */,
 			);
 			path = Sources;
+			sourceTree = "<group>";
+		};
+		AAA8010E1FC3164B00F08653 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				AAA8010F1FC3166300F08653 /* SourceryUtilities.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

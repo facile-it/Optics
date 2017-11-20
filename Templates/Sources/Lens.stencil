@@ -1,2 +1,5 @@
-
-// Testing Sourcery
+{% for type in types.all|annotated:"zipCount" %}
+{% for count in type.annotations.zipCount %}
+{{ count }}
+{% endfor %}
+{% endfor %}
