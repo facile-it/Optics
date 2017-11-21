@@ -9,6 +9,16 @@ public protocol LensType: OpticsType {
     var set: (BType) -> (SType) -> TType { get }
 }
 
+//public struct SpecificLens<Whole,Part>: OpticsType {
+//    public typealias SType = Whole
+//    public typealias TType = Whole
+//    public typealias AType = Part
+//    public typealias BType = Part
+//
+//    public var get: (Whole) -> Part
+//    public var set: (Part) -> (Whole) -> Whole
+//}
+
 public struct LensP<S,T,A,B>: LensType {
     public typealias SType = S
     public typealias TType = T
@@ -47,16 +57,16 @@ extension LensType {
 }
 
 /// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
-extension Lens {
-    public static func zip<A,B>(_ a: A, _ b: B) -> Lens<SType,(A.AType,B.AType)> where A: LensType, B: LensType, A.SType == A.TType, A.AType == A.BType, B.SType == B.TType, B.AType == B.BType, SType == A.SType, SType == B.SType {
-        return Lens<SType,(A.AType,B.AType)>.init(
-            get: { (a.get($0),b.get($0)) },
+extension LensType where SType == TType, AType == BType {
+    public static func zip<A,B>(_ a: A, _ b: B) -> LensP<SType,TType,(A.AType,B.AType),(A.BType,B.BType)> where A: LensType, B: LensType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == (A.AType,B.AType), BType == (A.BType,B.BType)  {
+        return LensP.init(
+            get: { s in (a.get(s),b.get(s)) },
             set: { (tuple) in
-                return { b.set(tuple.1)(a.set(tuple.0)($0)) }
+                { s in b.set(tuple.1)(a.set(tuple.0)(s)) }
         })
     }
     
-    public static func zip<A,B,C>(_ a: A, _ b: B, _ c: C) -> Lens<SType,(A.AType,B.AType,C.AType)> where A: LensType, B: LensType, C: LensType, A.SType == A.TType, B.SType == B.TType, C.SType == C.TType, A.AType == A.BType, B.AType == B.BType, C.AType == C.BType, SType == A.SType, SType == B.SType, SType == C.SType {
+    public static func zip<A,B,C>(_ a: A, _ b: B, _ c: C) -> Lens<SType,(A.AType,B.AType,C.AType)> where A: LensType, B: LensType, C: LensType, A.SType == SType, B.SType == SType, C.SType == SType, A.TType == TType, B.TType == TType, C.TType == TType, AType == (A.AType,B.AType,C.AType), BType == (A.BType,B.BType,C.BType) {
         return Lens<SType,(A.AType,B.AType,C.AType)>.init(
             get: { (a.get($0),b.get($0),c.get($0)) },
             set: {  tuple in
