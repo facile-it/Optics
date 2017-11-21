@@ -76,7 +76,7 @@ extension Dictionary {
 }
 
 // MARK: Lenses on Optionals
-
+/*
 extension LensType where PartType: OptionalType {
 	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
 		return Lens<WholeType,Optional<OtherLens.PartType>>.init(
@@ -131,6 +131,7 @@ extension LensType where PartType: OptionalType, PartType.ElementType: Monoid {
 		return left.compose(right)
 	}
 }
+*/
 
 // MARK: - Lens Laws
 
