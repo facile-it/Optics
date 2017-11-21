@@ -51,8 +51,8 @@ extension PrismType {
 
 /// zipped prisms will hold the laws only if the involved prisms are focusing on different parts
 extension Prism {
-	public static func zip<A,B>(_ a: A, _ b: B) -> Prism<WholeType,Either<A.PartType,B.PartType>> where A: PrismType, B: PrismType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == Either<A.PartType,B.PartType> {
-		return Prism<WholeType,Either<A.PartType,B.PartType>>(
+	public static func zip<A,B>(_ a: A, _ b: B) -> Prism<SType,Either<A.AType,B.AType>> where A: PrismType, B: PrismType, SType == A.SType, SType == B.SType, A.SType == A.TType, A.AType == A.BType, B.SType == B.TType, B.AType == B.BType {
+		return Prism<SType,Either<A.AType,B.AType>>(
 			tryGet: { a.tryGet($0).map(Either.left) ?? b.tryGet($0).map(Either.right) },
 			inject: { $0.fold(onLeft: a.inject, onRight: b.inject) })
 	}

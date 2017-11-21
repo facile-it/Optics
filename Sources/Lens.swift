@@ -47,7 +47,7 @@ extension LensType {
 }
 
 /// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
-extension Lens where SType == TType, AType == BType {
+extension Lens {
     public static func zip<A,B>(_ a: A, _ b: B) -> Lens<SType,(A.AType,B.AType)> where A: LensType, B: LensType, A.SType == A.TType, A.AType == A.BType, B.SType == B.TType, B.AType == B.BType, SType == A.SType, SType == B.SType {
         return Lens<SType,(A.AType,B.AType)>.init(
             get: { (a.get($0),b.get($0)) },
