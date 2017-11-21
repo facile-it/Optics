@@ -9,16 +9,6 @@ public protocol LensType: OpticsType {
     var set: (BType) -> (SType) -> TType { get }
 }
 
-//public struct SpecificLens<Whole,Part>: OpticsType {
-//    public typealias SType = Whole
-//    public typealias TType = Whole
-//    public typealias AType = Part
-//    public typealias BType = Part
-//
-//    public var get: (Whole) -> Part
-//    public var set: (Part) -> (Whole) -> Whole
-//}
-
 public struct LensP<S,T,A,B>: LensType {
     public typealias SType = S
     public typealias TType = T
