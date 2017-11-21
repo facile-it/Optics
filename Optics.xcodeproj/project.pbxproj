@@ -305,7 +305,6 @@
 			buildConfigurationList = 38D737891EE95C7D000BAF0C /* Build configuration list for PBXNativeTarget "Optics" */;
 			buildPhases = (
 				38D737741EE95C7D000BAF0C /* Headers */,
-				AAA801081FC2F59C00F08653 /* ShellScript */,
 				38D737721EE95C7D000BAF0C /* Sources */,
 				38D737731EE95C7D000BAF0C /* Frameworks */,
 				38D737751EE95C7D000BAF0C /* Resources */,
@@ -379,22 +378,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		AAA801081FC2F59C00F08653 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "bash sourceryGeneration.sh";
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		38A8246A1F0E62DA00C941A9 /* Sources */ = {

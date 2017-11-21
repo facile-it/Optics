@@ -73,47 +73,47 @@ When defining a Prism, it's important to test it after these laws with a propert
 
 public struct PrismLaw {
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Part) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.WholeType == Whole, SomePrism.PartType == Part {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Part) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Optional<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.WholeType == Whole, SomePrism.PartType == Optional<Part> {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Optional<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Optional<Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.WholeType == Whole, SomePrism.PartType == Array<Part> {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Array<Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.WholeType == Whole, SomePrism.PartType == Dictionary<String,Part> {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Dictionary<String,Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.WholeType == Whole, SomePrism.PartType == Part {
+	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let value = prism.tryGet(whole) else { return true }
 		return prism.inject(value) == whole
 	}
 
-	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.WholeType == Optional<Whole>, SomePrism.PartType == Part {
+	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.SType == Optional<Whole>, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let value = prism.tryGet(whole) else { return true }
 		return prism.inject(value) == whole
 	}
 
-	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.WholeType == Array<Whole>, SomePrism.PartType == Part {
+	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.SType == Array<Whole>, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let value = prism.tryGet(whole) else { return true }
 		return prism.inject(value) == whole
 	}
 
-	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.WholeType == Dictionary<String,Whole>, SomePrism.PartType == Part {
+	public static func tryGetInject<Whole, Part, SomePrism>(prism: SomePrism, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomePrism: PrismType, SomePrism.SType == Dictionary<String,Whole>, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let value = prism.tryGet(whole) else { return true }
 		return prism.inject(value) == whole
 	}
 
-	public static func tryGetInject<Whole1, Whole2, Part, SomePrism>(prism: SomePrism, whole: (Whole1,Whole2), part: Part) -> Bool where Whole1: Equatable, Whole2: Equatable, SomePrism: PrismType, SomePrism.WholeType == (Whole1,Whole2), SomePrism.PartType == Part {
+	public static func tryGetInject<Whole1, Whole2, Part, SomePrism>(prism: SomePrism, whole: (Whole1,Whole2), part: Part) -> Bool where Whole1: Equatable, Whole2: Equatable, SomePrism: PrismType, SomePrism.SType == (Whole1,Whole2), SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let value = prism.tryGet(whole) else { return true }
 		return prism.inject(value) == whole
 	}
