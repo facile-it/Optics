@@ -93,9 +93,7 @@
 		38D737AD1EE9830B000BAF0C /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 		38D737AE1EE9844A000BAF0C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		38FF309B1F86190000977CA7 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = Carthage/Build/iOS/Functional.framework; sourceTree = "<group>"; };
-		AAA8010A1FC30FC300F08653 /* Lens.stencil */ = {isa = PBXFileReference; lastKnownFileType = text; path = Lens.stencil; sourceTree = "<group>"; };
 		AAA8010B1FC3108E00F08653 /* Lens.generated.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Lens.generated.swift; sourceTree = "<group>"; };
-		AAA8010F1FC3166300F08653 /* SourceryUtilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SourceryUtilities.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,7 +181,6 @@
 		38D737641EE95B62000BAF0C = {
 			isa = PBXGroup;
 			children = (
-				AAA801061FC2F4A700F08653 /* Templates */,
 				38D737AE1EE9844A000BAF0C /* LICENSE */,
 				38D737AA1EE981AE000BAF0C /* README.md */,
 				38D7378F1EE95D54000BAF0C /* Info.plist */,
@@ -203,7 +200,6 @@
 		38D7376B1EE95BBB000BAF0C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
-				AAA8010E1FC3164B00F08653 /* Utilities */,
 				AAA8010B1FC3108E00F08653 /* Lens.generated.swift */,
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
@@ -249,30 +245,6 @@
 				38C3497F1F72AE9100811F72 /* test only */,
 			);
 			name = Dependencies;
-			sourceTree = "<group>";
-		};
-		AAA801061FC2F4A700F08653 /* Templates */ = {
-			isa = PBXGroup;
-			children = (
-				AAA801071FC2F51700F08653 /* Sources */,
-			);
-			path = Templates;
-			sourceTree = "<group>";
-		};
-		AAA801071FC2F51700F08653 /* Sources */ = {
-			isa = PBXGroup;
-			children = (
-				AAA8010A1FC30FC300F08653 /* Lens.stencil */,
-			);
-			path = Sources;
-			sourceTree = "<group>";
-		};
-		AAA8010E1FC3164B00F08653 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				AAA8010F1FC3166300F08653 /* SourceryUtilities.swift */,
-			);
-			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
