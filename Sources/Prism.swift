@@ -3,41 +3,48 @@ import Functional
 /// A Prism is a reference to a component of a sum type
 
 public protocol PrismType: OpticsType {
-	var tryGet: (WholeType) -> PartType? { get }
-	var inject: (PartType) -> WholeType { get }
+	var tryGet: (SType) -> AType? { get }
+	var inject: (BType) -> TType { get }
 
-	init(tryGet: @escaping (WholeType) -> PartType?, inject: @escaping (PartType) -> WholeType)
+	init(tryGet: @escaping (SType) -> AType?, inject: @escaping (BType) -> TType)
 }
 
-public struct Prism<Whole,Part>: PrismType {
-	public typealias WholeType = Whole
-	public typealias PartType = Part
+public struct PrismP<S,T,A,B>: PrismType {
+	public typealias SType = S
+	public typealias TType = T
+    public typealias AType = A
+    public typealias BType = B
 
-	public let tryGet: (Whole) -> Part? /// get the part, if possible
-	public let inject: (Part) -> Whole /// changes the value to reflect the part that's injected in
+	public let tryGet: (S) -> A? /// get the part, if possible
+	public let inject: (B) -> T /// changes the value to reflect the part that's injected in
 
-	public init(tryGet: @escaping (Whole) -> Part?, inject: @escaping (Part) -> Whole) {
+	public init(tryGet: @escaping (S) -> A?, inject: @escaping (B) -> T) {
 		self.tryGet = tryGet
 		self.inject = inject
 	}
 }
 
+public typealias Prism<Whole,Part> = PrismP<Whole,Whole,Part,Part>
+
 extension PrismType {
-	public func tryOver(_ transform: @escaping (PartType) -> PartType) -> (WholeType) -> WholeType {
-		return { whole in self.tryGet(whole).map { self.inject(transform($0)) } ?? whole }
+	public func tryOver(_ transform: @escaping (AType) -> BType) -> (SType) -> TType? {
+        return { s in
+            guard let a = self.tryGet(s) else { return nil }
+            return self.inject(transform(a))
+        }
 	}
     
-    public func isCase(_ whole: WholeType) -> Bool {
+    public func isCase(_ whole: SType) -> Bool {
         return tryGet(whole).isNotNil
     }
 
-	public func compose<OtherPrism>(_ other: OtherPrism) -> Prism<WholeType,OtherPrism.PartType> where OtherPrism: PrismType, OtherPrism.WholeType == PartType {
-		return Prism<WholeType,OtherPrism.PartType>(
+	public func compose<OtherPrism>(_ other: OtherPrism) -> PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
+		return PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> (
 			tryGet: { self.tryGet($0).flatMap(other.tryGet) },
 			inject: { self.inject(other.inject($0)) })
 	}
 
-	public static func .. <OtherPrism>(left: Self, right: OtherPrism) -> Prism<WholeType,OtherPrism.PartType> where OtherPrism: PrismType, OtherPrism.WholeType == PartType {
+	public static func .. <OtherPrism>(left: Self, right: OtherPrism) -> PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
 		return left.compose(right)
 	}
 }
