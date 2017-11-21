@@ -58,37 +58,6 @@ extension Prism {
 	}
 }
 
-/// A BoundPrism is a reference to a component of a specific sum type, to which it's "bound"
-
-public struct BoundPrism<Whole,Part> {
-	public let value: Whole
-	public let prism: Prism<Whole,Part>
-	public init<AssociatedPrism>(value: Whole, prism: AssociatedPrism) where AssociatedPrism: PrismType, AssociatedPrism.WholeType == Whole, AssociatedPrism.PartType == Part {
-		self.value = value
-		self.prism = Prism(tryGet: prism.tryGet, inject: prism.inject)
-	}
-}
-
-extension BoundPrism {
-	public var tryGet: Part? {
-		return prism.tryGet(value)
-	}
-
-	public var inject: (Part) -> Whole {
-		return { self.prism.inject($0) }
-	}
-
-	public func tryOver(_ transform: @escaping (Part) -> Part) -> Whole? {
-		return prism.tryOver(transform)(value)
-	}
-}
-
-extension PrismType {
-	public func bind(to value: WholeType) -> BoundPrism<WholeType,PartType> {
-		return BoundPrism(value: value, prism: self)
-	}
-}
-
 /*:
 ## Enforcing prism laws
 
