@@ -27,7 +27,7 @@ public struct PrismP<S,T,A,B>: PrismType {
 public typealias Prism<Whole,Part> = PrismP<Whole,Whole,Part,Part>
 
 extension PrismType {
-	public func tryOver(_ transform: @escaping (AType) -> BType) -> (SType) -> TType? {
+	public func tryModify(_ transform: @escaping (AType) -> BType) -> (SType) -> TType? {
         return { s in
             guard let a = self.tryGet(s) else { return nil }
             return self.inject(transform(a))
@@ -73,22 +73,22 @@ When defining a Prism, it's important to test it after these laws with a propert
 
 public struct PrismLaw {
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Part) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, part: Part) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Optional<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Optional<Part>, SomePrism.BType == SomePrism.AType {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, part: Optional<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Optional<Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Array<Part>, SomePrism.BType == SomePrism.AType {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, part: Array<Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Array<Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
 
-	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, whole: Whole, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Dictionary<String,Part>, SomePrism.BType == SomePrism.AType {
+	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Dictionary<String,Part>, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }
 		return  got == part
 	}
