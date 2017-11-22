@@ -4,16 +4,16 @@ import SwiftCheck
 
 class PrismTests: XCTestCase {
 	static var allTests = [
-		("testOver", testOver),
+		("testModify", testModify),
 		("testComposedPrismWellBehaved", testComposedPrismWellBehaved)
 	]
 
-	func testOver() {
-		property("'tryOver' works like injecting a value dependent on the previous tryGet") <- forAll { (as_: ArbitrarySum<Int,Int>, ar: ArrowOf<Int,Int>) in
+	func testModify() {
+		property("'tryModify' works like injecting a value dependent on the previous tryGet") <- forAll { (as_: ArbitrarySum<Int,Int>, ar: ArrowOf<Int,Int>) in
 			let s = as_.get
 			let a = ar.getArrow
-			return Sum<Int,Int>.leftPrism.tryOver(a)(s)
-				== Sum<Int,Int>.leftPrism.tryGet(s).map(a).map(Sum<Int,Int>.leftPrism.inject) ?? s
+			return Sum<Int,Int>.leftPrism.tryModify(a)(s)
+				== Sum<Int,Int>.leftPrism.tryGet(s).map(a).map(Sum<Int,Int>.leftPrism.inject)
 		}
 	}
 
@@ -29,7 +29,7 @@ class PrismTests: XCTestCase {
 
 			let joined = l1r.compose(l2l).compose(l3r)
 
-			return PrismLaw.injectTryGet(prism: joined, whole: s1, part: r3)
+			return PrismLaw.injectTryGet(prism: joined, part: r3)
 		}
 
 		property("TryGetInject") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in

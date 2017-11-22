@@ -5,108 +5,67 @@ import Functional
 /// A Lens is a reference to a subpart of some data structure
 
 public protocol LensType: OpticsType {
-	var get: (WholeType) -> PartType { get } /// get the "focused" part
-	var set: (PartType) -> (WholeType) -> WholeType { get } /// set a new value for the "focused" part
-
-	init(get: @escaping (WholeType) -> PartType, set: @escaping (PartType) -> (WholeType) -> WholeType)
+    var get: (SType) -> AType { get }
+    var set: (BType) -> (SType) -> TType { get }
 }
 
-public struct Lens<Whole,Part>: LensType {
-	public typealias WholeType = Whole
-	public typealias PartType = Part
-
-	public let get: (Whole) -> Part
-	public let set: (Part) -> (Whole) -> Whole
-
-	public init(get: @escaping (Whole) -> Part, set: @escaping (Part) -> (Whole) -> Whole) {
-		self.get = get
-		self.set = set
-	}
+public struct LensP<S,T,A,B>: LensType {
+    public typealias SType = S
+    public typealias TType = T
+    public typealias AType = A
+    public typealias BType = B
+    
+    public let get: (S) -> A
+    public let set: (B) -> (S) -> T
+    
+    public init(get: @escaping (S) -> A, set: @escaping (B) -> (S) -> T) {
+        self.get = get
+        self.set = set
+    }
 }
+
+public typealias Lens<Whole,Part> = LensP<Whole,Whole,Part,Part>
 
 extension LensType {
-	public func over(_ transform: @escaping (PartType) -> PartType) -> (WholeType) -> WholeType {
-		return { whole in self.set(transform(self.get(whole)))(whole) }
-	}
-
-	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType {
-		return Lens<WholeType,OtherLens.PartType>(
-			get: { other.get(self.get($0)) },
-			set: { (subpart: OtherLens.PartType) in
-				{ (whole: WholeType) -> WholeType in
-					self.set(other.set(subpart)(self.get(whole)))(whole)
-				}
-		})
-	}
-
-	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType {
-		return left.compose(right)
-	}
+    public func modify(_ transform: @escaping (AType) -> (BType)) -> (SType) -> TType {
+        return { s in self.set(transform(self.get(s)))(s) }
+    }
+    
+    public func compose<OtherLens>(_ other: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
+        return LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType>.init(
+            get: { other.get(self.get($0)) },
+            set: { bp in
+                return { s in
+                    return self.set(other.set(bp)(self.get(s)))(s)
+                }
+        })
+    }
+    
+    public static func .. <OtherLens>(left: Self, right: OtherLens) -> LensP<Self.SType,Self.TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == Self.AType, OtherLens.TType == Self.BType {
+        return left.compose(right)
+    }
 }
 
 /// zipped lenses will hold the laws only if the involved lenses are focusing on different parts
-extension Lens {
-	public static func zip<A,B>(_ a: A, _ b: B) -> Lens<WholeType,(A.PartType,B.PartType)> where A: LensType, B: LensType, WholeType == A.WholeType, WholeType == B.WholeType, PartType == (A.PartType,B.PartType) {
-		return Lens<WholeType,(A.PartType,B.PartType)>(
-			get: { (a.get($0),b.get($0)) },
-			set: { parts in { whole in b.set(parts.1)(a.set(parts.0)(whole)) } })
-	}
-
-	public static func zip<A, B, C>(_ a: A, _ b: B, _ c: C) -> Lens<WholeType,(A.PartType,B.PartType,C.PartType)> where A: LensType, B: LensType, C: LensType, WholeType == A.WholeType, WholeType == B.WholeType, WholeType == C.WholeType, PartType == (A.PartType,B.PartType,C.PartType) {
-		return Lens<WholeType,(A.PartType,B.PartType,C.PartType)>(
-			get: { (a.get($0),b.get($0),c.get($0)) },
-			set: { parts in { whole in c.set(parts.2)(b.set(parts.1)(a.set(parts.0)(whole))) } })
-	}
-}
-
-/// A BoundLens is a reference to a subpart of a specific data structure, to which it's "bound"
-
-public struct BoundLens<Whole,Part> {
-	fileprivate let value: Whole
-	fileprivate let lens: Lens<Whole,Part>
-
-	public init<AssociatedLens>(value: Whole, lens: AssociatedLens) where AssociatedLens: LensType, AssociatedLens.WholeType == Whole, AssociatedLens.PartType == Part {
-		self.value = value
-		self.lens = Lens(get: lens.get, set: lens.set)
-	}
-}
-
-extension BoundLens {
-	public var unmodified: Whole {
-		return value
-	}
-
-	public var get: Part {
-		return lens.get(value)
-	}
-
-	public var set: (Part) -> Whole {
-		return { self.lens.set($0)(self.value) }
-	}
-
-	public func over(_ transform: @escaping (Part) -> Part) -> Whole {
-		return lens.over(transform)(value)
-	}
-}
-
-extension LensType {
-	public func bind(to value: WholeType) -> BoundLens<WholeType,PartType> {
-		return BoundLens(value: value, lens: self)
-	}
+extension LensType where SType == TType, AType == BType {
+    public static func zip<A,B>(_ a: A, _ b: B) -> LensP<SType,TType,(A.AType,B.AType),(A.BType,B.BType)> where A: LensType, B: LensType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == (A.AType,B.AType), BType == (A.BType,B.BType)  {
+        return LensP.init(
+            get: { s in (a.get(s),b.get(s)) },
+            set: { (tuple) in
+                { s in b.set(tuple.1)(a.set(tuple.0)(s)) }
+        })
+    }
+    
+    public static func zip<A,B,C>(_ a: A, _ b: B, _ c: C) -> Lens<SType,(A.AType,B.AType,C.AType)> where A: LensType, B: LensType, C: LensType, A.SType == SType, B.SType == SType, C.SType == SType, A.TType == TType, B.TType == TType, C.TType == TType, AType == (A.AType,B.AType,C.AType), BType == (A.BType,B.BType,C.BType) {
+        return Lens<SType,(A.AType,B.AType,C.AType)>.init(
+            get: { (a.get($0),b.get($0),c.get($0)) },
+            set: {  tuple in
+                return { c.set(tuple.2)(b.set(tuple.1)(a.set(tuple.0)($0))) }
+        })
+    }
 }
 
 // MARK: - Utilities
-
-extension BoundLens where Part: Equatable {
-	@discardableResult
-	public func should(be requiredPart: Part) -> Whole {
-		if get != requiredPart {
-			return set(requiredPart)
-		} else {
-			return unmodified
-		}
-	}
-}
 
 extension Dictionary {
 	public static func lens(at key: Key) -> Lens<Dictionary,Value?> {
@@ -117,7 +76,7 @@ extension Dictionary {
 }
 
 // MARK: Lenses on Optionals
-
+/*
 extension LensType where PartType: OptionalType {
 	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
 		return Lens<WholeType,Optional<OtherLens.PartType>>.init(
@@ -172,6 +131,7 @@ extension LensType where PartType: OptionalType, PartType.ElementType: Monoid {
 		return left.compose(right)
 	}
 }
+*/
 
 // MARK: - Lens Laws
 
@@ -195,55 +155,55 @@ When defining a Lens, it's important to test it after these laws with a property
 :*/
 
 public struct LensLaw {
-	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Part {
+	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Optional<Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Optional<Part> {
+	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Optional<Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Optional<Part>, SomeLens.BType == Optional<Part> {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Array<Part> {
+	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Array<Part>, SomeLens.BType == Array<Part> {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Dictionary<String,Part> {
+	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Dictionary<String,Part>) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Dictionary<String,Part>, SomeLens.BType == Dictionary<String,Part> {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func setGet<Whole, Part1, Part2, SomeLens>(lens: SomeLens, whole: Whole, part: (Part1,Part2)) -> Bool where Part1: Equatable, Part2: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == (Part1,Part2) {
+	public static func setGet<Whole, Part1, Part2, SomeLens>(lens: SomeLens, whole: Whole, part: (Part1,Part2)) -> Bool where Part1: Equatable, Part2: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == (Part1,Part2), SomeLens.BType == (Part1,Part2) {
 		return lens.get(lens.set(part)(whole)) == part
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Optional<Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Optional<Whole>, SomeLens.TType == Optional<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Array<Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Array<Whole>, SomeLens.TType == Array<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Dictionary<String,Whole>, SomeLens.PartType == Part {
+	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Dictionary<String,Whole>, SomeLens.TType == Dictionary<String,Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Whole, SomeLens.PartType == Part {
+	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
 	}
 
-	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Optional<Whole>, SomeLens.PartType == Part {
+	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Optional<Whole>, SomeLens.TType == Optional<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
 	}
 
-	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Array<Whole>, SomeLens.PartType == Part {
+	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Array<Whole>, SomeLens.TType == Array<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
 	}
 
-	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.WholeType == Dictionary<String,Whole>, SomeLens.PartType == Part {
+	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Dictionary<String,Whole>, SomeLens.TType == Dictionary<String,Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
 	}
 }
