@@ -19,7 +19,7 @@
 		3866D9111FC5A26A0051D629 /* FunctionalKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D90A1FC5A1960051D629 /* FunctionalKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3866D9121FC5A26A0051D629 /* Operadics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D9091FC5A1960051D629 /* Operadics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3866D9131FC5A26A0051D629 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D90B1FC5A1960051D629 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38A824731F0E62DB00C941A9 /* Optics.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A824711F0E62DB00C941A9 /* Optics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		38A824731F0E62DB00C941A9 /* Optics-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A824711F0E62DB00C941A9 /* Optics-ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		38C349551F72ABA000811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15851F32019E003D4CCA /* Abstract.framework */; };
 		38C349571F72ABA900811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15891F3201AA003D4CCA /* Abstract.framework */; };
 		38C349641F72AC5400811F72 /* Optics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737771EE95C7D000BAF0C /* Optics.framework */; };
@@ -70,7 +70,7 @@
 		389D15851F32019E003D4CCA /* Abstract.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Abstract.framework; path = Carthage/Build/Mac/Abstract.framework; sourceTree = "<group>"; };
 		389D15891F3201AA003D4CCA /* Abstract.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Abstract.framework; path = Carthage/Build/iOS/Abstract.framework; sourceTree = "<group>"; };
 		38A8246F1F0E62DA00C941A9 /* Optics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Optics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		38A824711F0E62DB00C941A9 /* Optics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Optics.h; sourceTree = "<group>"; };
+		38A824711F0E62DB00C941A9 /* Optics-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Optics-ios.h"; sourceTree = "<group>"; };
 		38A824721F0E62DB00C941A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		38C3495F1F72AC5400811F72 /* OpticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D7376C1EE95BBB000BAF0C /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
@@ -142,7 +142,7 @@
 		38A824701F0E62DB00C941A9 /* Optics-ios */ = {
 			isa = PBXGroup;
 			children = (
-				38A824711F0E62DB00C941A9 /* Optics.h */,
+				38A824711F0E62DB00C941A9 /* Optics-ios.h */,
 				38A824721F0E62DB00C941A9 /* Info.plist */,
 			);
 			path = "Optics-ios";
@@ -158,8 +158,8 @@
 		38C3497D1F72AE7C00811F72 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				3866D9071FC5A1840051D629 /* FunctionalKit.framework */,
 				389D15851F32019E003D4CCA /* Abstract.framework */,
+				3866D9071FC5A1840051D629 /* FunctionalKit.framework */,
 			);
 			name = macOS;
 			sourceTree = "<group>";
@@ -167,8 +167,8 @@
 		38C3497E1F72AE8600811F72 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				3866D9051FC5A1680051D629 /* FunctionalKit.framework */,
 				389D15891F3201AA003D4CCA /* Abstract.framework */,
+				3866D9051FC5A1680051D629 /* FunctionalKit.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -254,7 +254,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38A824731F0E62DB00C941A9 /* Optics.h in Headers */,
+				38A824731F0E62DB00C941A9 /* Optics-ios.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -657,7 +657,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
 			};
@@ -689,7 +689,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 			};
 			name = Release;
