@@ -4,3 +4,8 @@ framework module SwiftCheck {
   export *
   module * { export * }
 }
+
+module SwiftCheck.Swift {
+    header "SwiftCheck-Swift.h"
+    requires objc
+}

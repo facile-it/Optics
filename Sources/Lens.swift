@@ -1,6 +1,5 @@
-import Monads
 import Abstract
-import Functional
+import FunctionalKit
 
 /// A Lens is a reference to a subpart of some data structure
 

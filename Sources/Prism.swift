@@ -1,4 +1,4 @@
-import Functional
+import FunctionalKit
 
 /// A Prism is a reference to a component of a sum type
 
@@ -35,7 +35,7 @@ extension PrismType {
 	}
     
     public func isCase(_ whole: SType) -> Bool {
-        return tryGet(whole).isNotNil
+        return tryGet(whole) != nil
     }
 
 	public func compose<OtherPrism>(_ other: OtherPrism) -> PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {

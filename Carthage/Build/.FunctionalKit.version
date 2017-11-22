@@ -1,0 +1,15 @@
+{
+  "commitish" : "ae36075b19b8eb68e828ae803f677beaff2f602a",
+  "Mac" : [
+    {
+      "name" : "FunctionalKit",
+      "hash" : "6f7f4a256b724f0a3c55b8a910582818009a383f2610dcc4006584960955538f"
+    }
+  ],
+  "iOS" : [
+    {
+      "name" : "FunctionalKit",
+      "hash" : "7751b67c0a179fc715b8227089f4a49b01d8e840aa37f583b35c03b10ca8dc4d"
+    }
+  ]
+}

@@ -1,2 +1,2 @@
-github "broomburgo/Functional"
-github "broomburgo/Monads"
+github "typelift/Abstract" "master"
+github "facile-it/FunctionalKit" "master"

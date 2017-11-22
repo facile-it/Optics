@@ -1,7 +1,7 @@
 import XCTest
 @testable import Optics
 import SwiftCheck
-import Functional
+import FunctionalKit
 
 class LensTests: XCTestCase {
 	static var allTests = [
