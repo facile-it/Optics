@@ -1,6 +1,6 @@
 import FunctionalKit
 
-/// A Prism is a reference to a component of a sum type
+/// A Prism is a reference to a component of a coproduct
 
 public protocol PrismType: OpticsType {
 	var tryGet: (SType) -> AType? { get }
