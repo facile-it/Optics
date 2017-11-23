@@ -49,11 +49,18 @@ extension PrismType {
 	}
 }
 
-/// zipped prisms will hold the laws only if the involved prisms are focusing on different parts
 extension PrismType where SType == TType, AType == BType {
-	public static func zip<A,B>(_ a: A, _ b: B) -> PrismP<SType,TType,Either<A.AType,B.AType>,Either<A.BType,B.BType>> where A: PrismType, B: PrismType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == Either<A.AType,B.AType>, BType == Either<A.BType,B.BType> {
+	public func tryOver(_ transform: @escaping (AType) -> BType) -> (SType) -> TType {
+		return { s in
+			guard let a = self.tryGet(s) else { return s }
+			return self.inject(transform(a))
+		}
+	}
+
+	/// zipped prisms will hold the laws only if the involved prisms are focusing on different parts
+	public static func zip<A,B>(_ a: A, _ b: B) -> PrismP<SType,TType,Coproduct<A.AType,B.AType>,Coproduct<A.BType,B.BType>> where A: PrismType, B: PrismType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == Coproduct<A.AType,B.AType>, BType == Coproduct<A.BType,B.BType> {
 		return PrismP.init(
-			tryGet: { a.tryGet($0).map(Either.left) ?? b.tryGet($0).map(Either.right) },
+			tryGet: { a.tryGet($0).map(Coproduct.left) ?? b.tryGet($0).map(Coproduct.right) },
 			inject: { $0.fold(onLeft: a.inject, onRight: b.inject) })
 	}
 }
@@ -61,7 +68,7 @@ extension PrismType where SType == TType, AType == BType {
 /*:
 ## Enforcing prism laws
 
-Much like prismes, prisms have their laws that have to be enforced to describe a "well-behaved" prism.
+Much like lenses, prisms have their laws that have to be enforced to describe a "well-behaved" prism.
 
 For a prism to be "well-behaved" it has to follow two invariants:
 

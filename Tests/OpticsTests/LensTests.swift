@@ -111,49 +111,43 @@ class LensTests: XCTestCase {
 		}
 	}
 
-//    func testComposeLensOptional1() {
-//        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, part: OptionalOf<Int>, defaultPart: Pair<Int,Int>) in
-//            LensLaw.getSet(
-//                lens: OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//
-//        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects SetGet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, part: OptionalOf<Int>, defaultPart: Pair<Int,Int>) in
-//            LensLaw.setGet(
-//                lens: OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//
-//        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects SetSet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, part: OptionalOf<Int>, defaultPart: Pair<Int,Int>) in
-//            LensLaw.setSet(
-//                lens: OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//    }
-//
-//    func testComposeLensOptional2() {
-//        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, part: OptionalOf<Int>, defaultPart: OptionalPair<Int,Int>) in
-//            LensLaw.getSet(
-//                lens: OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//
-//        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, part: OptionalOf<Int>, defaultPart: OptionalPair<Int,Int>) in
-//            return LensLaw.setGet(
-//                lens: OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//
-//        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects SetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, part: OptionalOf<Int>, defaultPart: OptionalPair<Int,Int>) in
-//            LensLaw.setSet(
-//                lens: OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, injecting: defaultPart),
-//                whole: whole,
-//                part: part.getOptional)
-//        }
-//    }
+    func testComposeLensOptional1() {
+        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, defaultPart: Pair<Int,Int>) in
+			let lens = OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.getSet(lens: lens, whole: whole)
+        }
+
+        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects SetGet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, part: OptionalOf<Int>, defaultPart: Pair<Int,Int>) in
+			let lens = OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.setGet(lens: lens, whole: whole, part: part.getOptional)
+        }
+
+        property("Lens.compose for Lens<_,Optional>..Lens<_,_> respects SetSet") <- forAll { (whole: OptionalPair<Int,Pair<Int,Int>>, part: OptionalOf<Int>, defaultPart: Pair<Int,Int>) in
+			let lens = OptionalPair<Int,Pair<Int,Int>>.lens.b.compose(Pair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.setSet(lens: lens, whole: whole, part: part.getOptional)
+        }
+    }
+
+    func testComposeLensOptional2() {
+        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, defaultPart: OptionalPair<Int,Int>) in
+			let lens = OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.getSet(lens: lens, whole: whole)
+        }
+
+        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects GetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, part: OptionalOf<Int>, defaultPart: OptionalPair<Int,Int>) in
+			let lens = OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.setGet(lens: lens, whole: whole, part: part.getOptional)
+        }
+
+        property("Lens.compose for Lens<_,Optional>..Lens<Optional,_> respects SetSet") <- forAll { (whole: OptionalPair<Int,OptionalPair<Int,Int>>, part: OptionalOf<Int>, defaultPart: OptionalPair<Int,Int>) in
+			let lens = OptionalPair<Int,OptionalPair<Int,Int>>.lens.b.compose(OptionalPair<Int,Int>.lens.a, defaulting: defaultPart)
+
+			return LensLaw.setSet(lens: lens, whole: whole, part: part.getOptional)
+        }
+    }
 }

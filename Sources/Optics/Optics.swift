@@ -6,10 +6,3 @@ public protocol OpticsType {
     associatedtype AType
     associatedtype BType
 }
-
-precedencegroup OpticsCompositionPrecedence {
-	associativity: left
-	higherThan: BitwiseShiftPrecedence
-}
-
-infix operator .. : OpticsCompositionPrecedence

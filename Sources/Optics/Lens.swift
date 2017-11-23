@@ -70,67 +70,73 @@ extension Dictionary {
 	public static func lens(at key: Key) -> Lens<Dictionary,Value?> {
 		return Lens<Dictionary,Value?>(
 			get: { $0[key] },
-			set: { part in { whole in var m_dict = whole; m_dict[key] = part; return m_dict } })
+			set: { part in
+				{ whole in
+					var m_dict = whole
+					m_dict[key] = part
+					return m_dict
+				}
+		})
 	}
 }
 
 // MARK: Lenses on Optionals
-/*
-extension LensType where PartType: OptionalType {
-	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
-		return Lens<WholeType,Optional<OtherLens.PartType>>.init(
-			get: { whole in self.get(whole).run(ifSome: { other.get($0) }, ifNone: { nil }) },
-			set: { optionalPart in { whole in
-				optionalPart.run(
-					ifSome: { self.set(PartType.pure(other.set($0)(self.get(whole).get(or: defaultPart()))))(whole) },
-					ifNone: { self.set(PartType.init())(whole) }) } })
+
+extension LensType where AType: OptionalType, BType: OptionalType {
+	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensP<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+		return LensP.init(
+			get: { s in self.get(s).map(other.get) },
+			set: { optionalOtherB in { s in
+				optionalOtherB
+					.map { otherB in other.set(otherB)(self.get(s).map(identity) ?? defaulting) }
+					.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+				?? self.set(BType.from(concrete: Optional.none))(s)
+				}
+		})
 	}
 
-	public static func .. <OtherLens>(left: Self, right: (OtherLens, injecting: () -> PartType.ElementType))
-		-> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
-			return left.compose(right.0, injecting: right.injecting())
+	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: AType.ParameterType)) -> LensP<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+		return lhs.compose(rhs.0, defaulting: rhs.defaulting)
 	}
 
-	public func compose<OtherLens>(_ other: OtherLens, injecting defaultPart: @autoclosure @escaping () -> PartType.ElementType) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
-		return Lens<WholeType,OtherLens.PartType>.init(
-			get: { whole in
-				self.get(whole).run(
-					ifSome: { other.get($0) },
-					ifNone: { OtherLens.PartType.init() })
-		},
-			set: { optionalPart in { whole in
-				optionalPart.run(
-					ifSome: { _ in self.set(PartType.pure(other.set(optionalPart)(self.get(whole).get(or: defaultPart()))))(whole) },
-					ifNone: {
-						self.get(whole).run(
-							ifSome: { self.set(PartType.pure(other.set(OtherLens.PartType.init())($0)))(whole) },
-							ifNone: { whole }) }) } })
+	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensP<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+		return LensP.init(
+			get: { s in OtherLens.AType.from(concrete: self.get(s).flatMap(other.get)) },
+			set: { optionalOtherB in { s in
+				optionalOtherB
+					.map { otherBTypeValue in OtherLens.BType.from(concrete: Optional.pure(otherBTypeValue)) }
+					.map { otherB in other.set(otherB)(self.get(s).map(identity) ?? defaulting) }
+					.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+					?? self.get(s)
+						.map { otherS in other.set(OtherLens.BType.from(concrete: Optional.none))(otherS) }
+						.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+					?? self.set(BType.from(concrete: Optional.none))(s)
+				}
+		})
 	}
 
-	public static func .. <OtherLens>(left: Self, right: (OtherLens, injecting: () -> PartType.ElementType))
-		-> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
-			return left.compose(right.0, injecting: right.injecting())
+	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: AType.ParameterType)) -> LensP<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+		return lhs.compose(rhs.0, defaulting: rhs.defaulting)
 	}
 }
 
-extension LensType where PartType: OptionalType, PartType.ElementType: Monoid {
-	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
-		return self.compose(other, injecting: .empty)
+extension LensType where AType: OptionalType, BType: OptionalType, AType.ParameterType: Monoid {
+	public func compose <OtherLens> (_ other: OtherLens) -> LensP<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+		return compose(other, defaulting: .empty)
 	}
 
-	public func compose<OtherLens>(_ other: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
-		return self.compose(other, injecting: .empty)
+	public static func .. <OtherLens> (lhs: Self, rhs: OtherLens) -> LensP<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+		return lhs.compose(rhs, defaulting: .empty)
 	}
 
-	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,Optional<OtherLens.PartType>> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType {
-		return left.compose(right)
+	public func compose <OtherLens> (_ other: OtherLens) -> LensP<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+		return compose(other, defaulting: .empty)
 	}
 
-	public static func .. <OtherLens>(left: Self, right: OtherLens) -> Lens<WholeType,OtherLens.PartType> where OtherLens: LensType, OtherLens.WholeType == PartType.ElementType, OtherLens.PartType: OptionalType {
-		return left.compose(right)
+	public static func .. <OtherLens> (lhs: Self, rhs: OtherLens) -> LensP<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+		return lhs.compose(rhs, defaulting: .empty)
 	}
 }
-*/
 
 // MARK: - Lens Laws
 
