@@ -9,7 +9,7 @@ public protocol PrismType: OpticsType {
 	init(tryGet: @escaping (SType) -> AType?, inject: @escaping (BType) -> TType)
 }
 
-public struct PrismP<S,T,A,B>: PrismType {
+public struct PrismFull<S,T,A,B>: PrismType {
 	public typealias SType = S
 	public typealias TType = T
     public typealias AType = A
@@ -24,7 +24,7 @@ public struct PrismP<S,T,A,B>: PrismType {
 	}
 }
 
-public typealias Prism<Whole,Part> = PrismP<Whole,Whole,Part,Part>
+public typealias Prism<Whole,Part> = PrismFull<Whole,Whole,Part,Part>
 
 extension PrismType {
 	public func tryModify(_ transform: @escaping (AType) -> BType) -> (SType) -> TType? {
@@ -38,13 +38,13 @@ extension PrismType {
         return tryGet(whole) != nil
     }
 
-	public func compose<OtherPrism>(_ other: OtherPrism) -> PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
-		return PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> (
+	public func compose<OtherPrism>(_ other: OtherPrism) -> PrismFull<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
+		return PrismFull<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> (
 			tryGet: { self.tryGet($0).flatMap(other.tryGet) },
 			inject: { self.inject(other.inject($0)) })
 	}
 
-	public static func .. <OtherPrism>(left: Self, right: OtherPrism) -> PrismP<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
+	public static func .. <OtherPrism>(left: Self, right: OtherPrism) -> PrismFull<Self.SType,Self.TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == Self.AType, OtherPrism.TType == Self.BType {
 		return left.compose(right)
 	}
 }
@@ -58,8 +58,8 @@ extension PrismType where SType == TType, AType == BType {
 	}
 
 	/// zipped prisms will hold the laws only if the involved prisms are focusing on different parts
-	public static func zip<A,B>(_ a: A, _ b: B) -> PrismP<SType,TType,Coproduct<A.AType,B.AType>,Coproduct<A.BType,B.BType>> where A: PrismType, B: PrismType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == Coproduct<A.AType,B.AType>, BType == Coproduct<A.BType,B.BType> {
-		return PrismP.init(
+	public static func zip<A,B>(_ a: A, _ b: B) -> PrismFull<SType,TType,Coproduct<A.AType,B.AType>,Coproduct<A.BType,B.BType>> where A: PrismType, B: PrismType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == Coproduct<A.AType,B.AType>, BType == Coproduct<A.BType,B.BType> {
+		return PrismFull.init(
 			tryGet: { a.tryGet($0).map(Coproduct.left) ?? b.tryGet($0).map(Coproduct.right) },
 			inject: { $0.fold(onLeft: a.inject, onRight: b.inject) })
 	}
