@@ -76,3 +76,23 @@ extension AdapterType where SType == TType, AType == BType {
 			to: fzip(a.to,b.to)..ffirst)
 	}
 }
+
+// MARK: - Adapter Laws
+
+/*:
+## Enforcing Iso laws
+
+An `Iso` should actually represent an isomorphism: this means that there's a one-to-one correspondence between instances of `Whole` and `Part` and I can always obtain a `Part` from a `Whole` and viceversa without gain or loss of information.
+
+In other words this means that calling `from..to` on a `Whole` returns the same `Whole`, and `to..from` on a `Part` returns the same `Part`.
+:*/
+
+public enum IsoLaw {
+	public static func fromTo<SomeIso>(whole: SomeIso.SType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.SType: Equatable {
+		return (whole |> iso.from |> iso.to) == whole
+	}
+
+	public static func tofrom<SomeIso>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType: Equatable {
+		return (part |> iso.to |> iso.from) == part
+	}
+}

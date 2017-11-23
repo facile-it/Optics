@@ -78,7 +78,7 @@ For a prism to be "well-behaved" it has to follow two invariants:
 When defining a Prism, it's important to test it after these laws with a property-based testing framework.
 :*/
 
-public struct PrismLaw {
+public enum PrismLaw {
 
 	public static func injectTryGet<Whole, Part, SomePrism>(prism: SomePrism, part: Part) -> Bool where Part: Equatable, SomePrism: PrismType, SomePrism.SType == Whole, SomePrism.TType == SomePrism.SType, SomePrism.AType == Part, SomePrism.BType == SomePrism.AType {
 		guard let got = prism.tryGet(prism.inject(part)) else { return false }

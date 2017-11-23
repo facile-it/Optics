@@ -159,7 +159,7 @@ There's also and additional law (for a "very well-behaved lens) that, if enforce
 When defining a Lens, it's important to test it after these laws with a property-based testing framework.
 :*/
 
-public struct LensLaw {
+public enum LensLaw {
 	public static func setGet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Part: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.get(lens.set(part)(whole)) == part
 	}
