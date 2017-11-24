@@ -27,6 +27,36 @@ struct Pair<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equa
 				set: { part in { whole in var m = whole; m.b = part; return m }})
 		}
 	}
+
+	enum iso {
+		static var couple: Iso<Pair<A,B>,Couple<A,B>> {
+			return Iso<Pair<A,B>,Couple<A,B>>.init(
+				from: { Couple.init(a: $0.a, b: $0.b) },
+				to: { Pair.init(a: $0.a, b: $0.b) })
+		}
+	}
+
+}
+
+struct Couple<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equatable {
+	var a: A
+	var b: B
+
+	public static var arbitrary: Gen<Couple<A, B>> {
+		return Gen.compose { Couple.init(a: $0.generate(), b: $0.generate()) }
+	}
+
+	static func == (left: Couple, right: Couple) -> Bool {
+		return left.a == right.a
+			&& left.b == right.b
+	}
+
+	enum iso {
+		static var pair: Iso<Couple<A,B>,Pair<A,B>> {
+			return Pair<A,B>.iso.couple.inverted
+		}
+	}
+
 }
 
 struct OptionalPair<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equatable {

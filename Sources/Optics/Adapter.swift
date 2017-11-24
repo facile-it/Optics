@@ -1,3 +1,6 @@
+#if !XCODE_BUILD
+import Operadics
+#endif
 import Abstract
 import FunctionalKit
 
@@ -28,8 +31,8 @@ public typealias Iso<Whole,Part> = Adapter<Whole,Whole,Part,Part>
 extension AdapterType {
 	public func compose <OtherAdapter> (_ other: OtherAdapter) -> Adapter<SType,TType,OtherAdapter.AType,OtherAdapter.BType> where OtherAdapter: AdapterType, OtherAdapter.SType == AType, OtherAdapter.TType == BType {
 		return Adapter.init(
-			from: self.from..other.from,
-			to: other.to..self.to)
+			from: from..other.from,
+			to: other.to..to)
 	}
 
 	public static func .. <OtherAdapter> (lhs: Self, rhs: OtherAdapter) -> Adapter<SType,TType,OtherAdapter.AType,OtherAdapter.BType> where OtherAdapter: AdapterType, OtherAdapter.SType == AType, OtherAdapter.TType == BType {

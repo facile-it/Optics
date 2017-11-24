@@ -1,3 +1,6 @@
+#if !XCODE_BUILD
+	import Operadics
+#endif
 import FunctionalKit
 
 /// A Prism is a reference to a component of a coproduct
