@@ -187,10 +187,6 @@ public enum LensLaw {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
 
-	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Optional<Whole>, SomeLens.TType == Optional<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
-		return lens.set(lens.get(whole))(whole) == whole
-	}
-
 	public static func getSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Array<Whole>) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Array<Whole>, SomeLens.TType == Array<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(lens.get(whole))(whole) == whole
 	}
@@ -200,10 +196,6 @@ public enum LensLaw {
 	}
 
 	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Whole, SomeLens.TType == Whole, SomeLens.AType == Part, SomeLens.BType == Part {
-		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
-	}
-
-	public static func setSet<Whole, Part, SomeLens>(lens: SomeLens, whole: Optional<Whole>, part: Part) -> Bool where Whole: Equatable, SomeLens: LensType, SomeLens.SType == Optional<Whole>, SomeLens.TType == Optional<Whole>, SomeLens.AType == Part, SomeLens.BType == Part {
 		return lens.set(part)(whole) == lens.set(part)(lens.set(part)(whole))
 	}
 

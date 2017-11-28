@@ -72,14 +72,6 @@ extension AdapterType {
 	}
 }
 
-extension AdapterType where SType == TType, AType == BType {
-	public static func zip <A,B> (_ a: A, _ b: B) -> Adapter<SType,TType,(A.AType,B.AType),(A.BType,B.BType)> where A: AdapterType, B: AdapterType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == (A.AType,B.AType), BType == (A.BType,B.BType) {
-		return Adapter.init(
-			from: fduplicate..fzip(a.from,b.from),
-			to: fzip(a.to,b.to)..ffirst)
-	}
-}
-
 // MARK: - Adapter Laws
 
 /*:
@@ -95,7 +87,23 @@ public enum IsoLaw {
 		return (whole |> iso.from |> iso.to) == whole
 	}
 
-	public static func tofrom<SomeIso>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType: Equatable {
+	public static func toFrom<SomeIso>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType: Equatable {
+		return (part |> iso.to |> iso.from) == part
+	}
+
+	public static func toFrom<SomeIso,T>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType == Optional<T>, T: Equatable {
+		return (part |> iso.to |> iso.from) == part
+	}
+
+	public static func toFrom<SomeIso,T>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType == Array<T>, T: Equatable {
+		return (part |> iso.to |> iso.from) == part
+	}
+
+	public static func toFrom<SomeIso,T>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType == Dictionary<String,T>, T: Equatable {
+		return (part |> iso.to |> iso.from) == part
+	}
+
+	public static func toFrom<SomeIso,T,U>(part: SomeIso.AType, iso: SomeIso) -> Bool where SomeIso: AdapterType, SomeIso.SType == SomeIso.TType, SomeIso.AType == SomeIso.BType, SomeIso.AType == (T,U), T: Equatable, U: Equatable {
 		return (part |> iso.to |> iso.from) == part
 	}
 }

@@ -22,6 +22,7 @@
 		3866D9161FC700C50051D629 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866D9151FC700C50051D629 /* Adapter.swift */; };
 		3866D9171FC700C50051D629 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866D9151FC700C50051D629 /* Adapter.swift */; };
 		38A824731F0E62DB00C941A9 /* Optics-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A824711F0E62DB00C941A9 /* Optics-ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		38BF39471FC873C700AB1B00 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF39461FC873C700AB1B00 /* AdapterTests.swift */; };
 		38C349551F72ABA000811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15851F32019E003D4CCA /* Abstract.framework */; };
 		38C349571F72ABA900811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15891F3201AA003D4CCA /* Abstract.framework */; };
 		38C349641F72AC5400811F72 /* Optics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737771EE95C7D000BAF0C /* Optics.framework */; };
@@ -75,6 +76,7 @@
 		38A8246F1F0E62DA00C941A9 /* Optics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Optics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38A824711F0E62DB00C941A9 /* Optics-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Optics-ios.h"; sourceTree = "<group>"; };
 		38A824721F0E62DB00C941A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38BF39461FC873C700AB1B00 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
 		38C3495F1F72AC5400811F72 /* OpticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D7376C1EE95BBB000BAF0C /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Lens.swift; path = Optics/Lens.swift; sourceTree = "<group>"; };
 		38D7376F1EE95BC5000BAF0C /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				38D737A01EE9600C000BAF0C /* TestUtilities.swift */,
 				38D737711EE95BC5000BAF0C /* LensTests.swift */,
 				38D737A51EE97A33000BAF0C /* PrismTests.swift */,
+				38BF39461FC873C700AB1B00 /* AdapterTests.swift */,
 			);
 			path = OpticsTests;
 			sourceTree = "<group>";
@@ -404,6 +407,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				38C3496A1F72AC6900811F72 /* TestUtilities.swift in Sources */,
+				38BF39471FC873C700AB1B00 /* AdapterTests.swift in Sources */,
 				38C3496B1F72AC6900811F72 /* LensTests.swift in Sources */,
 				38C3496C1F72AC6900811F72 /* PrismTests.swift in Sources */,
 			);
