@@ -29,7 +29,7 @@ public struct LensFull<S,T,A,B>: LensType {
 public typealias Lens<Whole,Part> = LensFull<Whole,Whole,Part,Part>
 
 extension LensType {
-    public func modify(_ transform: @escaping (AType) -> (BType)) -> (SType) -> TType {
+    public func modify(_ transform: @escaping (AType) -> BType) -> (SType) -> TType {
         return { s in self.set(transform(self.get(s)))(s) }
     }
     
