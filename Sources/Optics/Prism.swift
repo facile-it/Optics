@@ -53,7 +53,7 @@ extension PrismType {
 }
 
 extension PrismType where SType == TType, AType == BType {
-	public func tryOver(_ transform: @escaping (AType) -> BType) -> (SType) -> TType {
+	public func modifyOrUnchanged(_ transform: @escaping (AType) -> BType) -> (SType) -> TType {
 		return { s in
 			guard let a = self.tryGet(s) else { return s }
 			return self.inject(transform(a))
