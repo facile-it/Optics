@@ -1,6 +1,13 @@
 @testable import Optics
 import SwiftCheck
 
+extension CheckerArguments {
+	static func with(_ left: Int, _ right: Int, _ size: Int) -> CheckerArguments {
+		return CheckerArguments(
+			replay: .some((StdGen(left,right),size)))
+	}
+}
+
 struct Pair<A: Arbitrary & Equatable, B: Arbitrary & Equatable>: Arbitrary, Equatable {
 	var a: A
 	var b: B

@@ -113,7 +113,7 @@ extension Array {
 					var m = array
 					_ = m.remove(at: index)
 					m.insert(element, at: index)
-					return array
+					return m
 				}
 		})
 	}
@@ -157,16 +157,16 @@ public enum AffineLaw {
 		return affine.trySet(gotPart)(whole).map { $0 == whole } ?? false
 	}
 
-	public static func setSet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Whole, SomeAffine.TType == Whole, SomeAffine.AType == Part, SomeAffine.BType == Part {
+	public static func trySetTrySet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Whole, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Whole, SomeAffine.TType == Whole, SomeAffine.AType == Part, SomeAffine.BType == Part {
 		return affine.trySet(part)(whole) == affine.trySet(part)(whole).flatMap(affine.trySet(part))
 	}
 
-	public static func setSet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Array<Whole>, SomeAffine.TType == Array<Whole>, SomeAffine.AType == Part, SomeAffine.BType == Part {
+	public static func trySetTrySet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Array<Whole>, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Array<Whole>, SomeAffine.TType == Array<Whole>, SomeAffine.AType == Part, SomeAffine.BType == Part {
 		guard let newWhole = affine.trySet(part)(whole) else { return true }
 		return affine.trySet(part)(newWhole).map { $0 == newWhole } ?? false
 	}
 
-	public static func setSet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Dictionary<String,Whole>, SomeAffine.TType == Dictionary<String,Whole>, SomeAffine.AType == Part, SomeAffine.BType == Part {
+	public static func trySetTrySet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Dictionary<String,Whole>, part: Part) -> Bool where Whole: Equatable, SomeAffine: AffineType, SomeAffine.SType == Dictionary<String,Whole>, SomeAffine.TType == Dictionary<String,Whole>, SomeAffine.AType == Part, SomeAffine.BType == Part {
 		guard let newWhole = affine.trySet(part)(whole) else { return true }
 		return affine.trySet(part)(newWhole).map { $0 == newWhole } ?? false
 	}
