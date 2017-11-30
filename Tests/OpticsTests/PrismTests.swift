@@ -43,7 +43,7 @@ class PrismTests: XCTestCase {
 
 			let joined = l1r.compose(l2l).compose(l3r)
 
-			return PrismLaw.tryGetInject(prism: joined, whole: s1, part: r3)
+			return PrismLaw.tryGetInject(prism: joined, whole: s1)
 		}
 	}
 }
