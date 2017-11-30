@@ -4,6 +4,13 @@ import SwiftCheck
 import FunctionalKit
 
 class AdapterTests: XCTestCase {
+	static var allTests = [
+		("testComposedIsoWellBehaved", testComposedIsoWellBehaved),
+		("testLensFromAdapterWellBehaved", testLensFromAdapterWellBehaved),
+		("testPrismFromAdapterWellBehaved", testPrismFromAdapterWellBehaved),
+		("testAffineFromAdapterWellBehaved", testAffineFromAdapterWellBehaved),
+		("testAffineGraphCommutes", testAffineGraphCommutes)
+	]
 
 	func testComposedIsoWellBehaved() {
 		property("FromTo") <- forAll { (p: TestProduct<Int,Int>) in

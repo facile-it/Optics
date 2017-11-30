@@ -67,7 +67,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3802595A1FCDAB1900BF7307 /* Affine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Affine.swift; sourceTree = "<group>"; };
+		3802595A1FCDAB1900BF7307 /* Affine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Affine.swift; path = Optics/Affine.swift; sourceTree = "<group>"; };
 		384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlgebraicExtensions.swift; path = Optics/AlgebraicExtensions.swift; sourceTree = "<group>"; };
 		3866D9021FC5979B0051D629 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		3866D9031FC5979B0051D629 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
@@ -161,13 +161,6 @@
 			path = "Optics-ios";
 			sourceTree = "<group>";
 		};
-		38C3494E1F72AABE00811F72 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		38C3497D1F72AE7C00811F72 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -207,7 +200,6 @@
 				38D737781EE95C7D000BAF0C /* Products */,
 				38D7376B1EE95BBB000BAF0C /* Sources */,
 				38D7376E1EE95BC5000BAF0C /* Tests */,
-				38C3494E1F72AABE00811F72 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -216,10 +208,10 @@
 			children = (
 				3866D9151FC700C50051D629 /* Adapter.swift */,
 				3802595A1FCDAB1900BF7307 /* Affine.swift */,
+				384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */,
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
 				38D737A31EE9782E000BAF0C /* Prism.swift */,
-				384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";

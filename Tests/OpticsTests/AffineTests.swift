@@ -4,6 +4,14 @@ import SwiftCheck
 import FunctionalKit
 
 class AffineTests: XCTestCase {
+	static var allTests = [
+		("testArrayAffineWellBehaved", testArrayAffineWellBehaved),
+		("testComposedAffineWellBehaved", testComposedAffineWellBehaved),
+		("testAffineZipWellBehaved", testAffineZipWellBehaved),
+		("testAffineFromLensWellBehaved", testAffineFromLensWellBehaved),
+		("testAffineFromPrismWellBehaved", testAffineFromPrismWellBehaved)
+	]
+
 	func testArrayAffineWellBehaved() {
 		property("TrySetTryGet") <- forAll { (aa: ArrayOf<Int>, v: Int, i: UInt) in
 			let array = aa.getArray

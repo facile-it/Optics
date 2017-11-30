@@ -8,7 +8,9 @@ class LensTests: XCTestCase {
 		("testOver", testOver),
 		("testComposedLensWellBehaved", testComposedLensWellBehaved),
 		("testZipLensWellBehaved", testZipLensWellBehaved),
-		("testDictLensWellBehaved", testDictLensWellBehaved)
+		("testDictLensWellBehaved", testDictLensWellBehaved),
+		("testComposeLensOptional1", testComposeLensOptional1),
+		("testComposeLensOptional2", testComposeLensOptional2)
 	]
 
 	func testOver() {
