@@ -12,6 +12,8 @@
 		3814D6971F0E6FF00089D260 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
 		3814D6981F0E6FF20089D260 /* Optics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A71EE97E60000BAF0C /* Optics.swift */; };
 		3814D6991F0E6FF40089D260 /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A31EE9782E000BAF0C /* Prism.swift */; };
+		384E56901FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */; };
+		384E56911FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */; };
 		3866D9061FC5A1680051D629 /* FunctionalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9051FC5A1680051D629 /* FunctionalKit.framework */; };
 		3866D9081FC5A1840051D629 /* FunctionalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9071FC5A1840051D629 /* FunctionalKit.framework */; };
 		3866D90D1FC5A1960051D629 /* Operadics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9091FC5A1960051D629 /* Operadics.framework */; };
@@ -66,6 +68,7 @@
 
 /* Begin PBXFileReference section */
 		3802595A1FCDAB1900BF7307 /* Affine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Affine.swift; sourceTree = "<group>"; };
+		384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlgebraicExtensions.swift; path = Optics/AlgebraicExtensions.swift; sourceTree = "<group>"; };
 		3866D9021FC5979B0051D629 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
 		3866D9031FC5979B0051D629 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
 		3866D9051FC5A1680051D629 /* FunctionalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunctionalKit.framework; path = Carthage/Build/iOS/FunctionalKit.framework; sourceTree = "<group>"; };
@@ -216,6 +219,7 @@
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
 				38D737A31EE9782E000BAF0C /* Prism.swift */,
+				384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */,
 			);
 			path = Sources;
 			sourceTree = "<group>";
@@ -404,6 +408,7 @@
 			files = (
 				3814D6991F0E6FF40089D260 /* Prism.swift in Sources */,
 				3814D6971F0E6FF00089D260 /* Lens.swift in Sources */,
+				384E56911FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */,
 				3814D6981F0E6FF20089D260 /* Optics.swift in Sources */,
 				3866D9171FC700C50051D629 /* Adapter.swift in Sources */,
 				3802595C1FCDAB1900BF7307 /* Affine.swift in Sources */,
@@ -428,6 +433,7 @@
 			files = (
 				38D737A41EE9782E000BAF0C /* Prism.swift in Sources */,
 				38D737A91EE97EBA000BAF0C /* Optics.swift in Sources */,
+				384E56901FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */,
 				38D737951EE95DB5000BAF0C /* Lens.swift in Sources */,
 				3866D9161FC700C50051D629 /* Adapter.swift in Sources */,
 				3802595B1FCDAB1900BF7307 /* Affine.swift in Sources */,
