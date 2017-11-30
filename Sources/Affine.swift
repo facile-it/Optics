@@ -94,8 +94,8 @@ extension AffineType where TType == SType, AType == BType {
 	public static func zip<A,B>(_ a: A, _ b: B) -> AffineFull<SType,TType,(A.AType,B.AType),(A.BType,B.BType)> where A: AffineType, B: AffineType, A.SType == SType, B.SType == SType, A.TType == TType, B.TType == TType, AType == (A.AType,B.AType), BType == (A.BType,B.BType)  {
 		return AffineFull.init(
 			tryGet: { s in Optional.zip(a.tryGet(s),b.tryGet(s)) },
-			trySet: { (tuple) in
-				{ s in b.setOrUnchanged(tuple.1)(a.setOrUnchanged(tuple.0)(s)) }
+			trySet: { tuple in
+				{ s in a.trySet(tuple.0)(s).flatMap { newS in b.trySet(tuple.1)(newS) } }
 		})
 	}
 }
@@ -131,6 +131,11 @@ public enum AffineLaw {
 	public static func trySetTryGet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Whole, part: Part) -> Bool where Part: Equatable, SomeAffine: AffineType, SomeAffine.SType == Whole, SomeAffine.TType == Whole, SomeAffine.AType == Part, SomeAffine.BType == Part {
 		guard let newWhole = affine.trySet(part)(whole) else { return true }
 		return affine.tryGet(newWhole) == part
+	}
+
+	public static func trySetTryGet<Whole, Part1, Part2, SomeAffine>(affine: SomeAffine, whole: Whole, part: (Part1,Part2)) -> Bool where Part1: Equatable, Part2: Equatable, SomeAffine: AffineType, SomeAffine.SType == Whole, SomeAffine.TType == Whole, SomeAffine.AType == (Part1,Part2), SomeAffine.BType == (Part1,Part2) {
+		guard let newWhole = affine.trySet(part)(whole) else { return true }
+		return affine.tryGet(newWhole).map { $0 == part } ?? false
 	}
 
 	public static func trySetTryGet<Whole, Part, SomeAffine>(affine: SomeAffine, whole: Whole, part: Array<Part>) -> Bool where Part: Equatable, SomeAffine: AffineType, SomeAffine.SType == Whole, SomeAffine.TType == Whole, SomeAffine.AType == Array<Part>, SomeAffine.BType == Array<Part> {

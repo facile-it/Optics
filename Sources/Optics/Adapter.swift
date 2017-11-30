@@ -60,7 +60,7 @@ extension AdapterType {
 	}
 
 	public var toPrism: PrismFull<SType,TType,AType,BType> {
-		return PrismFull.init(tryGet: from..Optional.init, inject: to)
+		return PrismFull.init(tryGet: from, inject: to)
 	}
 
 	public static func .. <OtherPrism> (lhs: Self, rhs: OtherPrism) -> PrismFull<SType,TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == AType, OtherPrism.TType == BType {
@@ -70,6 +70,19 @@ extension AdapterType {
 	public static func .. <OtherPrism> (lhs: OtherPrism, rhs: Self) -> PrismFull<OtherPrism.SType,OtherPrism.TType,AType,BType> where OtherPrism: PrismType, OtherPrism.AType == SType, OtherPrism.BType == TType {
 		return lhs.compose(rhs.toPrism)
 	}
+
+	public var toAffine: AffineFull<SType,TType,AType,BType> {
+		return AffineFull.init(tryGet: from, trySet: to..fconstant)
+	}
+
+	public static func .. <OtherAffine> (lhs: Self, rhs: OtherAffine) -> AffineFull<SType,TType,OtherAffine.AType,OtherAffine.BType> where OtherAffine: AffineType, OtherAffine.SType == AType, OtherAffine.TType == BType {
+		return lhs.toAffine.compose(rhs)
+	}
+
+	public static func .. <OtherAffine> (lhs: OtherAffine, rhs: Self) -> AffineFull<OtherAffine.SType,OtherAffine.TType,AType,BType> where OtherAffine: AffineType, OtherAffine.AType == SType, OtherAffine.BType == TType {
+		return lhs.compose(rhs.toAffine)
+	}
+
 }
 
 // MARK: - Adapter Laws

@@ -9,7 +9,7 @@ extension CheckerArguments {
 	}
 }
 
-struct TestProduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
+struct TestProduct<A,B>: Equatable, Arbitrary, CustomStringConvertible where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
     let unwrap: Product<A,B>
     
     init(_ product: Product<A,B>) {
@@ -29,6 +29,10 @@ struct TestProduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B:
             TestProduct.init($0.generate(), $0.generate())
         }
     }
+
+	var description: String {
+		return "(\(unwrap.first),\(unwrap.second))"
+	}
     
     enum iso {
         static var product: Iso<TestProduct<A,B>,Product<A,B>> {
@@ -49,7 +53,7 @@ struct TestProduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B:
     }
 }
 
-struct TestCoproduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
+struct TestCoproduct<A,B>: Equatable, Arbitrary, CustomStringConvertible where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
     let unwrap: Coproduct<A,B>
     
     init(_ coproduct: Coproduct<A,B>) {
@@ -77,6 +81,12 @@ struct TestCoproduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, 
             }
         }
     }
+
+	var description: String {
+		return unwrap.fold(
+			onLeft: { "left(\($0))" },
+			onRight: { "right(\($0))" })
+	}
     
     enum iso {
         static var coproduct: Iso<TestCoproduct<A,B>,Coproduct<A,B>> {
@@ -98,7 +108,7 @@ struct TestCoproduct<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, 
 
 }
 
-struct Couple<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
+struct Couple<A,B>: Equatable, Arbitrary, CustomStringConvertible where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
     var a: A
     var b: B
 
@@ -111,6 +121,10 @@ struct Couple<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equa
         return Gen.compose { Couple.init(a: $0.generate(), b: $0.generate()) }
     }
 
+	var description: String {
+		return "(\(a),\(b))"
+	}
+
     enum iso {
         static var product: Iso<Couple<A,B>,Product<A,B>> {
             return Iso<Couple<A,B>,Product<A,B>>.init(
@@ -121,7 +135,7 @@ struct Couple<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equa
 
 }
 
-struct TestProductOptional<A,B>: Equatable, Arbitrary where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
+struct TestProductOptional<A,B>: Equatable, Arbitrary, CustomStringConvertible where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
     let unwrap: Product<A?,B?>
 
     static func == (lhs: TestProductOptional, rhs: TestProductOptional) -> Bool {
@@ -136,6 +150,10 @@ struct TestProductOptional<A,B>: Equatable, Arbitrary where A: Equatable & Arbit
                 $0.generate(using: OptionalOf<B>.arbitrary.map { $0.getOptional })))
         }
     }
+
+	var description: String {
+		return "(\(String(describing: unwrap.first)),\(String(describing: unwrap.second))"
+	}
     
     enum iso {
         static var product: Iso<TestProductOptional<A,B>,Product<A?,B?>> {
@@ -154,4 +172,68 @@ struct TestProductOptional<A,B>: Equatable, Arbitrary where A: Equatable & Arbit
             return iso.product..Product.lens.secondSame
         }
     }
+}
+
+struct TestInclusive<A,B>: Equatable, Arbitrary, CustomStringConvertible where A: Equatable & Arbitrary, B: Equatable & Arbitrary {
+	let unwrap: Inclusive<A,B>
+
+	init(_ inclusive: Inclusive<A,B>) {
+		self.unwrap = inclusive
+	}
+
+	static func left(_ value: A) -> TestInclusive {
+		return TestInclusive.init(.left(value))
+	}
+
+	static func right(_ value: B) -> TestInclusive {
+		return TestInclusive.init(.right(value))
+	}
+
+	static func center(_ a: A, _ b: B) -> TestInclusive {
+		return TestInclusive.init(.center(a,b))
+	}
+
+	static func == (lhs: TestInclusive, rhs: TestInclusive) -> Bool {
+		return lhs.unwrap == rhs.unwrap
+	}
+
+	static var arbitrary: Gen<TestInclusive<A, B>> {
+		return Gen.fromElements(of: [-1,0,1]).flatMap { value in
+			Gen.compose {
+				switch value {
+				case ..<0:
+					return .left($0.generate())
+				case 1...:
+					return .right($0.generate())
+				default:
+					return .center($0.generate(),$0.generate())
+				}
+			}
+		}
+	}
+
+	var description: String {
+		return unwrap.fold(
+			onLeft: { "left(\($0))" },
+			onCenter: { "center(\($0),\($1))" },
+			onRight: { "right(\($0))" })
+	}
+
+	enum iso {
+		static var inclusive: Iso<TestInclusive<A,B>,Inclusive<A,B>> {
+			return Iso<TestInclusive<A,B>,Inclusive<A,B>>.init(
+				from: { $0.unwrap },
+				to: { $0.fold(onLeft: TestInclusive.left, onCenter: TestInclusive.center, onRight: TestInclusive.right) })
+		}
+	}
+
+	enum affine {
+		static var left: Affine<TestInclusive<A,B>,A> {
+			return iso.inclusive..Inclusive.affine.leftSame
+		}
+
+		static var right: Affine<TestInclusive<A,B>,B> {
+			return iso.inclusive..Inclusive.affine.rightSame
+		}
+	}
 }
