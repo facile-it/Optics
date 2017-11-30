@@ -100,4 +100,30 @@ class AdapterTests: XCTestCase {
 			return AffineLaw.trySetTrySet(affine: affine, whole: p, part: v)
 		}
 	}
+
+	func testAffineGraphCommutes() {
+		property("tryGet") <- forAll { (p: TestProduct<Int,Int>) in
+			let a1 = TestProduct<Int,Int>.iso.product
+			let a2 = Couple<Int,Int>.iso.product.inverted
+			let composed = a1..a2
+			let affineDirect = composed.toAffine
+			let affineLens = composed.toLens.toAffine
+			let affinePrism = composed.toPrism.toAffine
+
+			return affineDirect.tryGet(p) == affineLens.tryGet(p)
+				&& affineDirect.tryGet(p) == affinePrism.tryGet(p)
+		}
+
+		property("trySet") <- forAll { (p: TestProduct<Int,Int>, v: Couple<Int,Int>) in
+			let a1 = TestProduct<Int,Int>.iso.product
+			let a2 = Couple<Int,Int>.iso.product.inverted
+			let composed = a1..a2
+			let affineDirect = composed.toAffine
+			let affineLens = composed.toLens.toAffine
+			let affinePrism = composed.toPrism.toAffine
+
+			return affineDirect.trySet(v)(p) == affineLens.trySet(v)(p)
+				&& affineDirect.trySet(v)(p) == affinePrism.trySet(v)(p)
+		}
+	}
 }
