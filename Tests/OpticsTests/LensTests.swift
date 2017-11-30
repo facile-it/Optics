@@ -20,46 +20,34 @@ class LensTests: XCTestCase {
 	}
 
 	func testComposedLensWellBehaved() {
-		property("SetGet") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in
-			let p3 = TestProduct.init(l3, r3)
-			let p2 = TestProduct.init(p3, r2)
-			let p1 = TestProduct.init(l1, p2)
+		property("SetGet") <- forAll { (p: TestProduct<Int,TestProduct<TestProduct<Int,Int>,Int>>, v: Int) in
+			let l1 = type(of: p).lens.second
+			let l2 = type(of: p.unwrap.second).lens.first
+			let l3 = TestProduct<Int,Int>.lens.second
 
-			let l1r = type(of: p1).lens.second
-			let l2l = type(of: p2).lens.first
-			let l3r = type(of: p3).lens.second
+			let joined = l1..l2..l3
 
-			let joined = l1r.compose(l2l).compose(l3r)
-
-			return LensLaw.setGet(lens: joined, whole: p1, part: r3)
+			return LensLaw.setGet(lens: joined, whole: p, part: v)
 		}
 
-		property("GetSet") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in
-			let p3 = TestProduct(l3, r3)
-			let p2 = TestProduct(p3, r2)
-			let p1 = TestProduct(l1, p2)
+		property("GetSet") <- forAll { (p: TestProduct<Int,TestProduct<TestProduct<Int,Int>,Int>>) in
+			let l1 = type(of: p).lens.second
+			let l2 = type(of: p.unwrap.second).lens.first
+			let l3 = TestProduct<Int,Int>.lens.second
 
-			let l1r = type(of: p1).lens.second
-			let l2l = type(of: p2).lens.first
-			let l3r = type(of: p3).lens.second
+			let joined = l1..l2..l3
 
-			let joined = l1r.compose(l2l).compose(l3r)
-
-			return LensLaw.getSet(lens: joined, whole: p1)
+			return LensLaw.getSet(lens: joined, whole: p)
 		}
 
-		property("SetSet") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in
-			let p3 = TestProduct(l3, r3)
-			let p2 = TestProduct(p3, r2)
-			let p1 = TestProduct(l1, p2)
+		property("SetSet") <- forAll { (p: TestProduct<Int,TestProduct<TestProduct<Int,Int>,Int>>, v: Int) in
+			let l1 = type(of: p).lens.second
+			let l2 = type(of: p.unwrap.second).lens.first
+			let l3 = TestProduct<Int,Int>.lens.second
 
-			let l1r = type(of: p1).lens.second
-			let l2l = type(of: p2).lens.first
-			let l3r = type(of: p3).lens.second
+			let joined = l1..l2..l3
 
-			let joined = l1r.compose(l2l).compose(l3r)
-
-			return LensLaw.setSet(lens: joined, whole: p1, part: r3)
+			return LensLaw.setSet(lens: joined, whole: p, part: v)
 		}
 	}
 

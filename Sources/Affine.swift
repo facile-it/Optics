@@ -48,33 +48,37 @@ extension AffineType {
 	public static func .. <OtherAffine> (lhs: Self, rhs: OtherAffine) -> AffineFull<SType,TType,OtherAffine.AType,OtherAffine.BType> where OtherAffine: AffineType, OtherAffine.SType == Self.AType, OtherAffine.TType == Self.BType {
 		return lhs.compose(rhs)
 	}
+}
 
-	public static func from <OtherLens> (lens: OtherLens) -> AffineFull<SType,TType,AType,BType> where OtherLens: LensType, OtherLens.SType == SType, OtherLens.TType == TType, OtherLens.AType == AType, OtherLens.BType == BType {
+extension LensType {
+	public var toAffine: AffineFull<SType,TType,AType,BType> {
 		return AffineFull<SType,TType,AType,BType>.init(
-			tryGet: { s in Optional.init(lens.get(s)) },
-			trySet: { b in { s in Optional.init(lens.set(b)(s)) } })
+			tryGet: self.get,
+			trySet: self.set)
 	}
 
-	public static func .. <OtherLens> (lhs: Self, rhs: OtherLens) -> AffineFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType, OtherLens.TType == BType {
-		return lhs.compose(AffineFull.from(lens: rhs))
+	public static func .. <OtherAffine> (lhs: Self, rhs: OtherAffine) -> AffineFull<SType,TType,OtherAffine.AType,OtherAffine.BType> where OtherAffine: AffineType, OtherAffine.SType == AType, OtherAffine.TType == BType {
+		return lhs.toAffine..rhs
 	}
 
-	public static func .. <OtherLens> (lhs: OtherLens, rhs: Self) -> AffineFull<OtherLens.SType,OtherLens.TType,AType,BType> where OtherLens: LensType, SType == OtherLens.AType, TType == OtherLens.BType {
-		return AffineFull.from(lens: lhs).compose(rhs)
+	public static func .. <OtherAffine> (lhs: OtherAffine, rhs: Self) -> AffineFull<OtherAffine.SType,OtherAffine.TType,AType,BType> where OtherAffine: AffineType, OtherAffine.AType == SType, OtherAffine.BType == TType {
+		return lhs..rhs.toAffine
 	}
+}
 
-	public static func from <OtherPrism> (prism: OtherPrism) -> AffineFull<SType,TType,AType,BType> where OtherPrism: PrismType, OtherPrism.SType == SType, OtherPrism.TType == TType, OtherPrism.AType == AType, OtherPrism.BType == BType {
+extension PrismType {
+	public var toAffine: AffineFull<SType,TType,AType,BType> {
 		return AffineFull<SType,TType,AType,BType>.init(
-			tryGet: { s in prism.tryGet(s) },
-			trySet: { b in { s in prism.tryModify(fconstant(b))(s) }})
+			tryGet: self.tryGet,
+			trySet: fconstant..self.tryModify)
 	}
 
-	public static func .. <OtherPrism> (lhs: Self, rhs: OtherPrism) -> AffineFull<SType,TType,OtherPrism.AType,OtherPrism.BType> where OtherPrism: PrismType, OtherPrism.SType == AType, OtherPrism.TType == BType {
-		return lhs.compose(AffineFull.from(prism: rhs))
+	public static func .. <OtherAffine> (lhs: Self, rhs: OtherAffine) -> AffineFull<SType,TType,OtherAffine.AType,OtherAffine.BType> where OtherAffine: AffineType, OtherAffine.SType == AType, OtherAffine.TType == BType {
+		return lhs.toAffine..rhs
 	}
 
-	public static func .. <OtherPrism> (lhs: OtherPrism, rhs: Self) -> AffineFull<OtherPrism.SType,OtherPrism.TType,AType,BType> where OtherPrism: PrismType, SType == OtherPrism.AType, TType == OtherPrism.BType {
-		return AffineFull.from(prism: lhs).compose(rhs)
+	public static func .. <OtherAffine> (lhs: OtherAffine, rhs: Self) -> AffineFull<OtherAffine.SType,OtherAffine.TType,AType,BType> where OtherAffine: AffineType, OtherAffine.AType == SType, OtherAffine.BType == TType {
+		return lhs..rhs.toAffine
 	}
 }
 

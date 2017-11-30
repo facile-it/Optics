@@ -18,32 +18,24 @@ class PrismTests: XCTestCase {
 	}
 
 	func testComposedPrismWellBehaved() {
-		property("InjectTryGet") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in
-			let s3 = TestCoproduct<Int,Int>.right(r3)
-			let s2 = TestCoproduct<TestCoproduct<Int,Int>,Int>.left(s3)
-			let s1 = TestCoproduct<Int,TestCoproduct<TestCoproduct<Int,Int>,Int>>.right(s2)
+		property("InjectTryGet") <- forAll { (c: TestCoproduct<Int,TestCoproduct<TestCoproduct<Int,Int>,Int>>, v: Int) in
+			let p1 = type(of: c).prism.right
+			let p2 = TestCoproduct<TestCoproduct<Int,Int>,Int>.prism.left
+			let p3 = TestCoproduct<Int,Int>.prism.right
 
-			let l1r = type(of: s1).prism.right
-			let l2l = type(of: s2).prism.left
-			let l3r = type(of: s3).prism.right
+			let joined = p1..p2..p3
 
-			let joined = l1r.compose(l2l).compose(l3r)
-
-			return PrismLaw.injectTryGet(prism: joined, part: r3)
+			return PrismLaw.injectTryGet(prism: joined, part: v)
 		}
 
-		property("TryGetInject") <- forAll { (l1: Int, r2: Int, l3: Int, r3: Int) in
-			let s3 = TestCoproduct<Int,Int>.right(r3)
-			let s2 = TestCoproduct<TestCoproduct<Int,Int>,Int>.left(s3)
-			let s1 = TestCoproduct<Int,TestCoproduct<TestCoproduct<Int,Int>,Int>>.right(s2)
+		property("TryGetInject") <- forAll { (c: TestCoproduct<Int,TestCoproduct<TestCoproduct<Int,Int>,Int>>) in
+			let p1 = type(of: c).prism.right
+			let p2 = TestCoproduct<TestCoproduct<Int,Int>,Int>.prism.left
+			let p3 = TestCoproduct<Int,Int>.prism.right
 
-			let l1r = type(of: s1).prism.right
-			let l2l = type(of: s2).prism.left
-			let l3r = type(of: s3).prism.right
+			let joined = p1..p2..p3
 
-			let joined = l1r.compose(l2l).compose(l3r)
-
-			return PrismLaw.tryGetInject(prism: joined, whole: s1)
+			return PrismLaw.tryGetInject(prism: joined, whole: c)
 		}
 	}
 }
