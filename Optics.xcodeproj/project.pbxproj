@@ -7,33 +7,37 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3802595B1FCDAB1900BF7307 /* Affine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3802595A1FCDAB1900BF7307 /* Affine.swift */; };
+		3802595C1FCDAB1900BF7307 /* Affine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3802595A1FCDAB1900BF7307 /* Affine.swift */; };
 		3814D6971F0E6FF00089D260 /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
 		3814D6981F0E6FF20089D260 /* Optics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A71EE97E60000BAF0C /* Optics.swift */; };
 		3814D6991F0E6FF40089D260 /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A31EE9782E000BAF0C /* Prism.swift */; };
-		38A824731F0E62DB00C941A9 /* Optics.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A824711F0E62DB00C941A9 /* Optics.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		384E56901FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */; };
+		384E56911FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */; };
+		3866D9061FC5A1680051D629 /* FunctionalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9051FC5A1680051D629 /* FunctionalKit.framework */; };
+		3866D9081FC5A1840051D629 /* FunctionalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9071FC5A1840051D629 /* FunctionalKit.framework */; };
+		3866D90D1FC5A1960051D629 /* Operadics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D9091FC5A1960051D629 /* Operadics.framework */; };
+		3866D90E1FC5A1960051D629 /* FunctionalKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D90A1FC5A1960051D629 /* FunctionalKit.framework */; };
+		3866D90F1FC5A1960051D629 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D90B1FC5A1960051D629 /* SwiftCheck.framework */; };
+		3866D9101FC5A1960051D629 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3866D90C1FC5A1960051D629 /* Abstract.framework */; };
+		3866D9111FC5A26A0051D629 /* FunctionalKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D90A1FC5A1960051D629 /* FunctionalKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3866D9121FC5A26A0051D629 /* Operadics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D9091FC5A1960051D629 /* Operadics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3866D9131FC5A26A0051D629 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 3866D90B1FC5A1960051D629 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3866D9161FC700C50051D629 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866D9151FC700C50051D629 /* Adapter.swift */; };
+		3866D9171FC700C50051D629 /* Adapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3866D9151FC700C50051D629 /* Adapter.swift */; };
+		38A824731F0E62DB00C941A9 /* Optics-ios.h in Headers */ = {isa = PBXBuildFile; fileRef = 38A824711F0E62DB00C941A9 /* Optics-ios.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		38BF39471FC873C700AB1B00 /* AdapterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38BF39461FC873C700AB1B00 /* AdapterTests.swift */; };
 		38C349551F72ABA000811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15851F32019E003D4CCA /* Abstract.framework */; };
-		38C349561F72ABA000811F72 /* Monads.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15861F32019E003D4CCA /* Monads.framework */; };
 		38C349571F72ABA900811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15891F3201AA003D4CCA /* Abstract.framework */; };
-		38C349581F72ABA900811F72 /* Monads.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D158A1F3201AA003D4CCA /* Monads.framework */; };
 		38C349641F72AC5400811F72 /* Optics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38D737771EE95C7D000BAF0C /* Optics.framework */; };
 		38C3496A1F72AC6900811F72 /* TestUtilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A01EE9600C000BAF0C /* TestUtilities.swift */; };
 		38C3496B1F72AC6900811F72 /* LensTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737711EE95BC5000BAF0C /* LensTests.swift */; };
 		38C3496C1F72AC6900811F72 /* PrismTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A51EE97A33000BAF0C /* PrismTests.swift */; };
-		38C3496D1F72ACE700811F72 /* SwiftCheck.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38A8243D1F0E528C00C941A9 /* SwiftCheck.framework */; };
-		38C3496F1F72ACF700811F72 /* Abstract.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15851F32019E003D4CCA /* Abstract.framework */; };
-		38C349701F72ACF700811F72 /* Monads.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 389D15861F32019E003D4CCA /* Monads.framework */; };
 		38C349741F72ADAE00811F72 /* Abstract.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 389D15851F32019E003D4CCA /* Abstract.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38C349751F72ADAE00811F72 /* Monads.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 389D15861F32019E003D4CCA /* Monads.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38C349761F72ADAE00811F72 /* SwiftCheck.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38A8243D1F0E528C00C941A9 /* SwiftCheck.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38C349781F72AE2A00811F72 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C349771F72AE2500811F72 /* Functional.framework */; };
-		38C349791F72AE2D00811F72 /* Functional.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38C349771F72AE2500811F72 /* Functional.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		38C3497B1F72AE5C00811F72 /* Operadics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C3497A1F72AE5900811F72 /* Operadics.framework */; };
-		38C3497C1F72AE5E00811F72 /* Operadics.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 38C3497A1F72AE5900811F72 /* Operadics.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38D737951EE95DB5000BAF0C /* Lens.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D7376C1EE95BBB000BAF0C /* Lens.swift */; };
 		38D737A41EE9782E000BAF0C /* Prism.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A31EE9782E000BAF0C /* Prism.swift */; };
 		38D737A91EE97EBA000BAF0C /* Optics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38D737A71EE97E60000BAF0C /* Optics.swift */; };
-		38FF309C1F86190F00977CA7 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38C349771F72AE2500811F72 /* Functional.framework */; };
-		38FF309D1F86191400977CA7 /* Functional.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38FF309B1F86190000977CA7 /* Functional.framework */; };
+		38FA04E11FCEB61F00B94521 /* AffineTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FA04E01FCEB61F00B94521 /* AffineTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -53,29 +57,35 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				38C3497C1F72AE5E00811F72 /* Operadics.framework in CopyFiles */,
-				38C349791F72AE2D00811F72 /* Functional.framework in CopyFiles */,
 				38C349741F72ADAE00811F72 /* Abstract.framework in CopyFiles */,
-				38C349751F72ADAE00811F72 /* Monads.framework in CopyFiles */,
-				38C349761F72ADAE00811F72 /* SwiftCheck.framework in CopyFiles */,
+				3866D9111FC5A26A0051D629 /* FunctionalKit.framework in CopyFiles */,
+				3866D9121FC5A26A0051D629 /* Operadics.framework in CopyFiles */,
+				3866D9131FC5A26A0051D629 /* SwiftCheck.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3802595A1FCDAB1900BF7307 /* Affine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Affine.swift; path = Optics/Affine.swift; sourceTree = "<group>"; };
+		384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AlgebraicExtensions.swift; path = Optics/AlgebraicExtensions.swift; sourceTree = "<group>"; };
+		3866D9021FC5979B0051D629 /* Cartfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		3866D9031FC5979B0051D629 /* Cartfile.private */ = {isa = PBXFileReference; lastKnownFileType = text; path = Cartfile.private; sourceTree = "<group>"; };
+		3866D9051FC5A1680051D629 /* FunctionalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunctionalKit.framework; path = Carthage/Build/iOS/FunctionalKit.framework; sourceTree = "<group>"; };
+		3866D9071FC5A1840051D629 /* FunctionalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunctionalKit.framework; path = Carthage/Build/Mac/FunctionalKit.framework; sourceTree = "<group>"; };
+		3866D9091FC5A1960051D629 /* Operadics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Operadics.framework; path = Carthage/Build/Mac/Operadics.framework; sourceTree = "<group>"; };
+		3866D90A1FC5A1960051D629 /* FunctionalKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FunctionalKit.framework; path = Carthage/Build/Mac/FunctionalKit.framework; sourceTree = "<group>"; };
+		3866D90B1FC5A1960051D629 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
+		3866D90C1FC5A1960051D629 /* Abstract.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Abstract.framework; path = Carthage/Build/Mac/Abstract.framework; sourceTree = "<group>"; };
+		3866D9151FC700C50051D629 /* Adapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Adapter.swift; path = Optics/Adapter.swift; sourceTree = "<group>"; };
 		389D15851F32019E003D4CCA /* Abstract.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Abstract.framework; path = Carthage/Build/Mac/Abstract.framework; sourceTree = "<group>"; };
-		389D15861F32019E003D4CCA /* Monads.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Monads.framework; path = Carthage/Build/Mac/Monads.framework; sourceTree = "<group>"; };
 		389D15891F3201AA003D4CCA /* Abstract.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Abstract.framework; path = Carthage/Build/iOS/Abstract.framework; sourceTree = "<group>"; };
-		389D158A1F3201AA003D4CCA /* Monads.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Monads.framework; path = Carthage/Build/iOS/Monads.framework; sourceTree = "<group>"; };
-		38A8243D1F0E528C00C941A9 /* SwiftCheck.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftCheck.framework; path = Carthage/Build/Mac/SwiftCheck.framework; sourceTree = "<group>"; };
 		38A8246F1F0E62DA00C941A9 /* Optics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Optics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		38A824711F0E62DB00C941A9 /* Optics.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Optics.h; sourceTree = "<group>"; };
+		38A824711F0E62DB00C941A9 /* Optics-ios.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Optics-ios.h"; sourceTree = "<group>"; };
 		38A824721F0E62DB00C941A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		38BF39461FC873C700AB1B00 /* AdapterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdapterTests.swift; sourceTree = "<group>"; };
 		38C3495F1F72AC5400811F72 /* OpticsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpticsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		38C349771F72AE2500811F72 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = Carthage/Build/Mac/Functional.framework; sourceTree = "<group>"; };
-		38C3497A1F72AE5900811F72 /* Operadics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Operadics.framework; path = Carthage/Build/Mac/Operadics.framework; sourceTree = "<group>"; };
-		38D7376C1EE95BBB000BAF0C /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lens.swift; sourceTree = "<group>"; };
+		38D7376C1EE95BBB000BAF0C /* Lens.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Lens.swift; path = Optics/Lens.swift; sourceTree = "<group>"; };
 		38D7376F1EE95BC5000BAF0C /* LinuxMain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LinuxMain.swift; sourceTree = "<group>"; };
 		38D737711EE95BC5000BAF0C /* LensTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LensTests.swift; sourceTree = "<group>"; };
 		38D737771EE95C7D000BAF0C /* Optics.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Optics.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,14 +93,14 @@
 		38D737901EE95D54000BAF0C /* InfoTests.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = InfoTests.plist; sourceTree = "<group>"; };
 		38D737A01EE9600C000BAF0C /* TestUtilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestUtilities.swift; sourceTree = "<group>"; };
 		38D737A21EE960F4000BAF0C /* Package.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
-		38D737A31EE9782E000BAF0C /* Prism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Prism.swift; sourceTree = "<group>"; };
+		38D737A31EE9782E000BAF0C /* Prism.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Prism.swift; path = Optics/Prism.swift; sourceTree = "<group>"; };
 		38D737A51EE97A33000BAF0C /* PrismTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrismTests.swift; sourceTree = "<group>"; };
-		38D737A71EE97E60000BAF0C /* Optics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Optics.swift; sourceTree = "<group>"; };
+		38D737A71EE97E60000BAF0C /* Optics.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Optics.swift; path = Optics/Optics.swift; sourceTree = "<group>"; };
 		38D737AA1EE981AE000BAF0C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		38D737AC1EE982BB000BAF0C /* .travis.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .travis.yml; sourceTree = "<group>"; };
 		38D737AD1EE9830B000BAF0C /* codecov.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = codecov.yml; sourceTree = "<group>"; };
 		38D737AE1EE9844A000BAF0C /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
-		38FF309B1F86190000977CA7 /* Functional.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Functional.framework; path = Carthage/Build/iOS/Functional.framework; sourceTree = "<group>"; };
+		38FA04E01FCEB61F00B94521 /* AffineTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AffineTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,9 +108,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3866D9061FC5A1680051D629 /* FunctionalKit.framework in Frameworks */,
 				38C349571F72ABA900811F72 /* Abstract.framework in Frameworks */,
-				38C349581F72ABA900811F72 /* Monads.framework in Frameworks */,
-				38FF309D1F86191400977CA7 /* Functional.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,11 +118,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				38C349641F72AC5400811F72 /* Optics.framework in Frameworks */,
-				38C349781F72AE2A00811F72 /* Functional.framework in Frameworks */,
-				38C3496D1F72ACE700811F72 /* SwiftCheck.framework in Frameworks */,
-				38C3496F1F72ACF700811F72 /* Abstract.framework in Frameworks */,
-				38C3497B1F72AE5C00811F72 /* Operadics.framework in Frameworks */,
-				38C349701F72ACF700811F72 /* Monads.framework in Frameworks */,
+				3866D90D1FC5A1960051D629 /* Operadics.framework in Frameworks */,
+				3866D90E1FC5A1960051D629 /* FunctionalKit.framework in Frameworks */,
+				3866D90F1FC5A1960051D629 /* SwiftCheck.framework in Frameworks */,
+				3866D9101FC5A1960051D629 /* Abstract.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -121,37 +129,43 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3866D9081FC5A1840051D629 /* FunctionalKit.framework in Frameworks */,
 				38C349551F72ABA000811F72 /* Abstract.framework in Frameworks */,
-				38C349561F72ABA000811F72 /* Monads.framework in Frameworks */,
-				38FF309C1F86190F00977CA7 /* Functional.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3866D9041FC5979E0051D629 /* Documents */ = {
+			isa = PBXGroup;
+			children = (
+				3866D9021FC5979B0051D629 /* Cartfile */,
+				3866D9031FC5979B0051D629 /* Cartfile.private */,
+				38D737AE1EE9844A000BAF0C /* LICENSE */,
+				38D737AA1EE981AE000BAF0C /* README.md */,
+				38D7378F1EE95D54000BAF0C /* Info.plist */,
+				38D737901EE95D54000BAF0C /* InfoTests.plist */,
+				38D737AC1EE982BB000BAF0C /* .travis.yml */,
+				38D737AD1EE9830B000BAF0C /* codecov.yml */,
+			);
+			name = Documents;
+			sourceTree = "<group>";
+		};
 		38A824701F0E62DB00C941A9 /* Optics-ios */ = {
 			isa = PBXGroup;
 			children = (
-				38A824711F0E62DB00C941A9 /* Optics.h */,
+				38A824711F0E62DB00C941A9 /* Optics-ios.h */,
 				38A824721F0E62DB00C941A9 /* Info.plist */,
 			);
 			path = "Optics-ios";
 			sourceTree = "<group>";
 		};
-		38C3494E1F72AABE00811F72 /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		38C3497D1F72AE7C00811F72 /* macOS */ = {
 			isa = PBXGroup;
 			children = (
-				38C349771F72AE2500811F72 /* Functional.framework */,
 				389D15851F32019E003D4CCA /* Abstract.framework */,
-				389D15861F32019E003D4CCA /* Monads.framework */,
+				3866D9071FC5A1840051D629 /* FunctionalKit.framework */,
 			);
 			name = macOS;
 			sourceTree = "<group>";
@@ -159,9 +173,8 @@
 		38C3497E1F72AE8600811F72 /* iOS */ = {
 			isa = PBXGroup;
 			children = (
-				38FF309B1F86190000977CA7 /* Functional.framework */,
 				389D15891F3201AA003D4CCA /* Abstract.framework */,
-				389D158A1F3201AA003D4CCA /* Monads.framework */,
+				3866D9051FC5A1680051D629 /* FunctionalKit.framework */,
 			);
 			name = iOS;
 			sourceTree = "<group>";
@@ -169,8 +182,10 @@
 		38C3497F1F72AE9100811F72 /* test only */ = {
 			isa = PBXGroup;
 			children = (
-				38C3497A1F72AE5900811F72 /* Operadics.framework */,
-				38A8243D1F0E528C00C941A9 /* SwiftCheck.framework */,
+				3866D90C1FC5A1960051D629 /* Abstract.framework */,
+				3866D90A1FC5A1960051D629 /* FunctionalKit.framework */,
+				3866D9091FC5A1960051D629 /* Operadics.framework */,
+				3866D90B1FC5A1960051D629 /* SwiftCheck.framework */,
 			);
 			name = "test only";
 			sourceTree = "<group>";
@@ -178,25 +193,22 @@
 		38D737641EE95B62000BAF0C = {
 			isa = PBXGroup;
 			children = (
-				38D737AE1EE9844A000BAF0C /* LICENSE */,
-				38D737AA1EE981AE000BAF0C /* README.md */,
-				38D7378F1EE95D54000BAF0C /* Info.plist */,
-				38D737901EE95D54000BAF0C /* InfoTests.plist */,
 				38D737A21EE960F4000BAF0C /* Package.swift */,
-				38D737AC1EE982BB000BAF0C /* .travis.yml */,
-				38D737AD1EE9830B000BAF0C /* codecov.yml */,
+				3866D9041FC5979E0051D629 /* Documents */,
 				38D737971EE95E2C000BAF0C /* Dependencies */,
 				38A824701F0E62DB00C941A9 /* Optics-ios */,
 				38D737781EE95C7D000BAF0C /* Products */,
 				38D7376B1EE95BBB000BAF0C /* Sources */,
 				38D7376E1EE95BC5000BAF0C /* Tests */,
-				38C3494E1F72AABE00811F72 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
 		38D7376B1EE95BBB000BAF0C /* Sources */ = {
 			isa = PBXGroup;
 			children = (
+				3866D9151FC700C50051D629 /* Adapter.swift */,
+				3802595A1FCDAB1900BF7307 /* Affine.swift */,
+				384E568F1FD04B6500F1FB89 /* AlgebraicExtensions.swift */,
 				38D7376C1EE95BBB000BAF0C /* Lens.swift */,
 				38D737A71EE97E60000BAF0C /* Optics.swift */,
 				38D737A31EE9782E000BAF0C /* Prism.swift */,
@@ -216,9 +228,11 @@
 		38D737701EE95BC5000BAF0C /* OpticsTests */ = {
 			isa = PBXGroup;
 			children = (
-				38D737A01EE9600C000BAF0C /* TestUtilities.swift */,
+				38BF39461FC873C700AB1B00 /* AdapterTests.swift */,
+				38FA04E01FCEB61F00B94521 /* AffineTests.swift */,
 				38D737711EE95BC5000BAF0C /* LensTests.swift */,
 				38D737A51EE97A33000BAF0C /* PrismTests.swift */,
+				38D737A01EE9600C000BAF0C /* TestUtilities.swift */,
 			);
 			path = OpticsTests;
 			sourceTree = "<group>";
@@ -250,7 +264,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38A824731F0E62DB00C941A9 /* Optics.h in Headers */,
+				38A824731F0E62DB00C941A9 /* Optics-ios.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -386,7 +400,10 @@
 			files = (
 				3814D6991F0E6FF40089D260 /* Prism.swift in Sources */,
 				3814D6971F0E6FF00089D260 /* Lens.swift in Sources */,
+				384E56911FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */,
 				3814D6981F0E6FF20089D260 /* Optics.swift in Sources */,
+				3866D9171FC700C50051D629 /* Adapter.swift in Sources */,
+				3802595C1FCDAB1900BF7307 /* Affine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,8 +412,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				38C3496A1F72AC6900811F72 /* TestUtilities.swift in Sources */,
+				38BF39471FC873C700AB1B00 /* AdapterTests.swift in Sources */,
 				38C3496B1F72AC6900811F72 /* LensTests.swift in Sources */,
 				38C3496C1F72AC6900811F72 /* PrismTests.swift in Sources */,
+				38FA04E11FCEB61F00B94521 /* AffineTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -406,7 +425,10 @@
 			files = (
 				38D737A41EE9782E000BAF0C /* Prism.swift in Sources */,
 				38D737A91EE97EBA000BAF0C /* Optics.swift in Sources */,
+				384E56901FD04B6500F1FB89 /* AlgebraicExtensions.swift in Sources */,
 				38D737951EE95DB5000BAF0C /* Lens.swift in Sources */,
+				3866D9161FC700C50051D629 /* Adapter.swift in Sources */,
+				3802595B1FCDAB1900BF7307 /* Affine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -653,9 +675,10 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_SWIFT_FLAGS = "-DXCODE_BUILD";
 			};
 			name = Debug;
 		};
@@ -685,8 +708,9 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				OTHER_SWIFT_FLAGS = "-DXCODE_BUILD";
 			};
 			name = Release;
 		};

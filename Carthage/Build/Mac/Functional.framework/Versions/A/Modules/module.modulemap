@@ -1,4 +1,0 @@
-framework module Functional {
-    header "Functional-Swift.h"
-    requires objc
-}

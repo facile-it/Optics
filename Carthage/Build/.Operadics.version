@@ -2,20 +2,26 @@
   "Mac" : [
     {
       "name" : "Operadics",
-      "hash" : "a296ac12078afb4050526c0a27631a0db02f55bd0a3a13360dc80d37bcf5894f"
+      "hash" : "136ccf97f3ee4bd974b4a098e81bb919ea1907c7edbd8b7d5a60d7ef228192d4"
     }
   ],
   "watchOS" : [
-
+    {
+      "name" : "Operadics",
+      "hash" : "9a8c3e53c14dc03062a2e9ea96250dff750057304efaeb5236987f4f675c42fe"
+    }
   ],
   "tvOS" : [
-
+    {
+      "name" : "Operadics",
+      "hash" : "a39430c76c04fa89b361fe5efd55c17f55e1dddf633051eb41f6b1b2f11191dc"
+    }
   ],
-  "commitish" : "f6aa739369baded0b509157cc8c9beaf16bfe636",
+  "commitish" : "0.2.3",
   "iOS" : [
     {
       "name" : "Operadics",
-      "hash" : "78de6f4b8918cd398d6834576d14e861959a6ff57ad61c0ee751f4fbe508cc1f"
+      "hash" : "832395d7ca462dd6454d267c427548cda1a21f45575ae01c06599519d02584b1"
     }
   ]
 }
