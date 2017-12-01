@@ -141,4 +141,56 @@ class AffineTests: XCTestCase {
 			return AffineLaw.trySetTrySet(affine: affine, whole: a, part: v)
 		}
 	}
+
+	func testLensPrismCompositionWellBehaved() {
+		property("TrySetTryGet") <- forAll { (a: TestProduct<Int,TestCoproduct<Int,Int>>, v: Int) in
+			let lens = type(of: a).lens.second
+			let prism = TestCoproduct<Int,Int>.prism.left
+			let composed = lens..prism
+
+			return AffineLaw.trySetTryGet(affine: composed, whole: a, part: v)
+		}
+
+		property("TryGetTrySet") <- forAll { (a: TestProduct<Int,TestCoproduct<Int,Int>>) in
+			let lens = type(of: a).lens.second
+			let prism = TestCoproduct<Int,Int>.prism.left
+			let composed = lens..prism
+
+			return AffineLaw.tryGetTrySet(affine: composed, whole: a)
+		}
+
+		property("TrySetTrySet") <- forAll { (a: TestProduct<Int,TestCoproduct<Int,Int>>, v: Int) in
+			let lens = type(of: a).lens.second
+			let prism = TestCoproduct<Int,Int>.prism.left
+			let composed = lens..prism
+
+			return AffineLaw.trySetTrySet(affine: composed, whole: a, part: v)
+		}
+	}
+
+	func testPrismLensCompositionWellBehaved() {
+		property("TrySetTryGet") <- forAll { (a: TestCoproduct<Int,TestProduct<Int,Int>>, v: Int) in
+			let prism = type(of: a).prism.right
+			let lens = TestProduct<Int,Int>.lens.first
+			let composed = prism..lens
+
+			return AffineLaw.trySetTryGet(affine: composed, whole: a, part: v)
+		}
+
+		property("TryGetTrySet") <- forAll { (a: TestCoproduct<Int,TestProduct<Int,Int>>) in
+			let prism = type(of: a).prism.right
+			let lens = TestProduct<Int,Int>.lens.first
+			let composed = prism..lens
+
+			return AffineLaw.tryGetTrySet(affine: composed, whole: a)
+		}
+
+		property("TrySetTrySet") <- forAll { (a: TestCoproduct<Int,TestProduct<Int,Int>>, v: Int) in
+			let prism = type(of: a).prism.right
+			let lens = TestProduct<Int,Int>.lens.first
+			let composed = prism..lens
+
+			return AffineLaw.trySetTrySet(affine: composed, whole: a, part: v)
+		}
+	}
 }
