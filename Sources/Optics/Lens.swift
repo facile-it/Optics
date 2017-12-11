@@ -88,11 +88,11 @@ extension Dictionary {
 extension LensType where AType: OptionalType, BType: OptionalType {
 	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
 		return LensFull.init(
-			get: { s in self.get(s).map(other.get) },
+			get: { s in self.get(s).fmap(other.get) },
 			set: { optionalOtherB in { s in
 				optionalOtherB
-					.map { otherB in other.set(otherB)(self.get(s).map(fidentity) ?? defaulting) }
-					.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting) }
+					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 				?? self.set(BType.from(concrete: Optional.none))(s)
 				}
 		})
@@ -104,15 +104,15 @@ extension LensType where AType: OptionalType, BType: OptionalType {
 
 	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
 		return LensFull.init(
-			get: { s in OtherLens.AType.from(concrete: self.get(s).flatMap(other.get)) },
+			get: { s in OtherLens.AType.from(concrete: self.get(s).bind(other.get)) },
 			set: { optionalOtherB in { s in
 				optionalOtherB
-					.map { otherBTypeValue in OtherLens.BType.from(concrete: Optional.pure(otherBTypeValue)) }
-					.map { otherB in other.set(otherB)(self.get(s).map(fidentity) ?? defaulting) }
-					.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+					.fmap { otherBTypeValue in OtherLens.BType.from(concrete: Optional.pure(otherBTypeValue)) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting) }
+					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 					?? self.get(s)
-						.map { otherS in other.set(OtherLens.BType.from(concrete: Optional.none))(otherS) }
-						.map { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
+						.fmap { otherS in other.set(OtherLens.BType.from(concrete: Optional.none))(otherS) }
+						.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 					?? self.set(BType.from(concrete: Optional.none))(s)
 				}
 		})
