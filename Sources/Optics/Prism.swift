@@ -68,6 +68,14 @@ extension PrismType where SType == TType, AType == BType {
 	}
 }
 
+extension Optional {
+	public static var prism: Prism<Optional,Wrapped> {
+		return Prism<Optional,Wrapped>.init(
+			tryGet: fidentity,
+			inject: Optional.some)
+	}
+}
+
 /*:
 ## Enforcing prism laws
 
