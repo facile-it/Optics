@@ -86,29 +86,29 @@ extension Dictionary {
 // MARK: Lenses on Optionals
 
 extension LensType where AType: OptionalType, BType: OptionalType {
-	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+	public func compose <OtherLens> (_ other: OtherLens, defaulting: @autoclosure @escaping () -> AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
 		return LensFull.init(
 			get: { s in self.get(s).fmap(other.get) },
 			set: { optionalOtherB in { s in
 				optionalOtherB
-					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting()) }
 					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 				?? self.set(BType.from(concrete: Optional.none))(s)
 				}
 		})
 	}
 
-	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: AType.ParameterType)) -> LensFull<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
-		return lhs.compose(rhs.0, defaulting: rhs.defaulting)
+	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: () -> AType.ParameterType)) -> LensFull<SType,TType,OtherLens.AType?,OtherLens.BType?> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType {
+		return lhs.compose(rhs.0, defaulting: rhs.defaulting())
 	}
 
-	public func compose <OtherLens> (_ other: OtherLens, defaulting: AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+	public func compose <OtherLens> (_ other: OtherLens, defaulting: @autoclosure @escaping () -> AType.ParameterType) -> LensFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
 		return LensFull.init(
 			get: { s in OtherLens.AType.from(concrete: self.get(s).bind(other.get)) },
 			set: { optionalOtherB in { s in
 				optionalOtherB
 					.fmap { otherBTypeValue in OtherLens.BType.from(concrete: Optional.pure(otherBTypeValue)) }
-					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting()) }
 					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 					?? self.get(s)
 						.fmap { otherS in other.set(OtherLens.BType.from(concrete: Optional.none))(otherS) }
@@ -118,8 +118,8 @@ extension LensType where AType: OptionalType, BType: OptionalType {
 		})
 	}
 
-	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: AType.ParameterType)) -> LensFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
-		return lhs.compose(rhs.0, defaulting: rhs.defaulting)
+	public static func .. <OtherLens> (lhs: Self, rhs: (OtherLens, defaulting: () -> AType.ParameterType)) -> LensFull<SType,TType,OtherLens.AType,OtherLens.BType> where OtherLens: LensType, OtherLens.SType == AType.ParameterType, OtherLens.TType == BType.ParameterType, OtherLens.AType: OptionalType, OtherLens.BType: OptionalType {
+		return lhs.compose(rhs.0, defaulting: rhs.defaulting())
 	}
 }
 
