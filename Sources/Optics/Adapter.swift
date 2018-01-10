@@ -28,6 +28,20 @@ public struct Adapter<S,T,A,B>: AdapterType {
 
 public typealias Iso<Whole,Part> = Adapter<Whole,Whole,Part,Part>
 
+// MARK: - Utility
+
+extension Writer {
+	public enum iso {
+		public static var product: Iso<Writer,Product<L,A>> {
+			return Iso<Writer,Product<L,A>>.init(
+				from: { $0.toProduct },
+				to: { $0.fold(Writer.init) })
+		}
+	}
+}
+
+// MARK: - Iso Laws
+
 extension AdapterType {
 	public func compose <OtherAdapter> (_ other: OtherAdapter) -> Adapter<SType,TType,OtherAdapter.AType,OtherAdapter.BType> where OtherAdapter: AdapterType, OtherAdapter.SType == AType, OtherAdapter.TType == BType {
 		return Adapter.init(

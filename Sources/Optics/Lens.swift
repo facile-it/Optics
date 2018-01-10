@@ -83,6 +83,18 @@ extension Dictionary {
 	}
 }
 
+extension Writer {
+	public enum lens {
+		public static var log: Lens<Writer,L> {
+			return iso.product..Product.lens.first
+		}
+
+		public static var value: Lens<Writer,A> {
+			return iso.product..Product.lens.second
+		}
+	}
+}
+
 // MARK: Lenses on Optionals
 
 extension LensType where AType: OptionalType, BType: OptionalType {
