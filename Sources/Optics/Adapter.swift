@@ -40,6 +40,16 @@ extension Writer {
 	}
 }
 
+extension Result {
+	public enum iso {
+		public static var coproduct: Iso<Result,Coproduct<E,T>> {
+			return Iso<Result,Coproduct<E,T>>.init(
+				from: { $0.toCoproduct },
+				to: { $0.fold(onLeft: Result.failure, onRight: Result.success)})
+		}
+	}
+}
+
 // MARK: - Iso Laws
 
 extension AdapterType {
