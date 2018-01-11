@@ -1,2 +1,2 @@
 github "typelift/Abstract"
-github "facile-it/FunctionalKit"
+github "facile-it/FunctionalKit" "CAI-86-free-functions-namespace"

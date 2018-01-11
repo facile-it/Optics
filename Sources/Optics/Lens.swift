@@ -103,7 +103,7 @@ extension LensType where AType: OptionalType, BType: OptionalType {
 			get: { s in self.get(s).fmap(other.get) },
 			set: { optionalOtherB in { s in
 				optionalOtherB
-					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting()) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(f.identity) ?? defaulting()) }
 					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 				?? self.set(BType.from(concrete: Optional.none))(s)
 				}
@@ -120,7 +120,7 @@ extension LensType where AType: OptionalType, BType: OptionalType {
 			set: { optionalOtherB in { s in
 				optionalOtherB
 					.fmap { otherBTypeValue in OtherLens.BType.from(concrete: Optional.pure(otherBTypeValue)) }
-					.fmap { otherB in other.set(otherB)(self.get(s).fmap(fidentity) ?? defaulting()) }
+					.fmap { otherB in other.set(otherB)(self.get(s).fmap(f.identity) ?? defaulting()) }
 					.fmap { b in self.set(BType.from(concrete: Optional.pure(b)))(s) }
 					?? self.get(s)
 						.fmap { otherS in other.set(OtherLens.BType.from(concrete: Optional.none))(otherS) }
