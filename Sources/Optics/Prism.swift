@@ -68,11 +68,25 @@ extension PrismType where SType == TType, AType == BType {
 	}
 }
 
+// MARK: - Utilities
+
 extension Optional {
 	public static var prism: Prism<Optional,Wrapped> {
 		return Prism<Optional,Wrapped>.init(
 			tryGet: fidentity,
 			inject: Optional.some)
+	}
+}
+
+extension Result {
+	public enum prism {
+		public static var failure: Prism<Result,E> {
+			return iso.coproduct..Coproduct.prism.left
+		}
+
+		public static var success: Prism<Result,T> {
+			return iso.coproduct..Coproduct.prism.right
+		}
 	}
 }
 
